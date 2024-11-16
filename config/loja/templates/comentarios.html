@@ -1,0 +1,46 @@
+{% load custom_tags %} <!-- Carregue corretamente suas tags personalizadas -->
+
+{% for avaliacao in avaliacoes %}
+    <div class="infosAvaliacao" id="comentario-{{ avaliacao.id }}">
+        <p id="nomeAv"><strong>{{ avaliacao.usuario.username }} </strong>
+            <span id="dataAv">{{ avaliacao.data_avaliacao|date:"d/m/Y H:i" }}</span>
+            {% if user.is_authenticated %}
+                {% if user == avaliacao.usuario or user.is_staff %}
+                    <button class="excluir-comentario" data-id="{{ avaliacao.id }}">Excluir</button>
+                {% endif %}
+            {% endif %}
+        </p>
+        <p id="starsAv">{% render_estrelas avaliacao.nota %}</p>
+        <p id="comentAv">" {{ avaliacao.comentario }} "</p>
+    </div>
+{% empty %}
+    <p>Este produto ainda não possui avaliações.</p>
+{% endfor %}
+
+<script>
+    document.querySelectorAll('.excluir-comentario').forEach(button => {
+        button.addEventListener('click', function() {
+            const comentarioId = this.getAttribute('data-id');
+
+            // Envia a requisição AJAX para excluir o comentário
+            fetch(`/excluir_comentario/${comentarioId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // Garante que é uma requisição AJAX
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',  // Envia o token CSRF para segurança
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Remove o comentário da página
+                    document.getElementById(`comentario-${comentarioId}`).remove();
+                } else {
+                    alert("Erro ao excluir o comentário.");
+                }
+            });
+        });
+    });
+</script>
+
+

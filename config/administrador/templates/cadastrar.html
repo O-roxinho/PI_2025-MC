@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Produto</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f8f4f0;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+
+    .container {
+      margin-top: 90px;
+      margin-bottom: 90px;
+      width: 95%;
+      max-width: 500px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-section {
+      flex: 1 1 49%;
+      min-width: 280px;
+    }
+
+    h1 {
+      font-size: 1.5em;
+      color: #444;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: 600;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      color: #555;
+      background-color: #fff4e6;
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .file-upload {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed #aaa;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff4e6;
+      color: #d35400;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .file-upload:hover {
+      border-color: #d35400;
+      color: #d35400;
+    }
+
+    .file-upload input[type="file"] {
+      display: none;
+    }
+
+    button {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      width: 100%;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      margin-bottom: 5px;
+    }
+
+    button:hover {
+      background-color: #cf711f;
+    }
+
+    .message {
+      font-size: 0.9em;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .message.success {
+      color: #28a745;
+    }
+
+    .message.error {
+      color: #e74c3c;
+    }
+
+    #tblProd {
+      display: block;
+      text-align: center;
+      color: #e67e22;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    #tblProd:hover {
+      text-decoration: underline;
+    }
+
+    .category-form {
+      margin-top: 20px;
+    }
+
+    .help-text {
+      font-size: 0.85em;
+      color: gray;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .divider {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 15px;
+      margin-top: 21px;
+    }
+
+    #telefone-form {
+      margin-top: -112px !important;
+    }
+
+    #add_categoria {
+      margin-top: -3px;
+    }
+    #txtCad {
+  
+  margin-bottom: 20px; /* Adiciona mais espaço abaixo do título */
+  text-align: center;
+  width: 100%; /* Garante que o título ocupe toda a largura disponível */
+  padding: 0; /* Remove o padding excessivo */
+  position: relative; /* Garante que o elemento esteja posicionado 
+  corretamente */
+
+}
+#moxima{
+   /* Adiciona mais espaço abaixo do título */
+  width: 100%; /* Garante que o título ocupe toda a largura disponível */
+  padding: 0; /* Remove o padding excessivo */
+  position: relative; /* Garante que o elemento esteja posicionado 
+  corretamente */
+  left: 10px;
+  font-size: 20px;
+  color: #d35400;
+}
+@media (max-width: 480px){
+  #txtCad { 
+    text-align: center;
+        width: 100%;
+        position: static;
+        padding: 0;
+        left: 0;
+        font-size: 15px;
+  
+}
+}
+  </style>
+ <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    function updateFileName() {
+      const input = document.getElementById('imagem');
+      const span = document.getElementById('file-name');
+      
+      console.log("Função chamada"); // Para confirmar que a função está sendo chamada
+      
+      if (input.files.length === 1) {
+        span.textContent = input.files[0].name;
+      } else {
+        span.textContent = 'Clique para selecionar uma imagem';
+      }
+    }
+    
+    document.getElementById("imagem").addEventListener("change", updateFileName);
+  });
+</script>
+</head>
+<body>
+  
+  <div class="container">    
+    <div class="form-section">
+      {% if id_ %}
+    <h1 id="txtCad" style="font-size: 32pt;">Atualizar Produto</h1>
+    {% else %}
+    <h1 id="txtCad" style="font-size: 28pt;">Cadastro de Produto</h1>
+    
+    {% endif %}
+
+    {% if id_ %}
+    <form method="POST" action="/administrador/atualizar/{{id_}}" enctype="multipart/form-data">
+      {% else %}
+      <form method="POST" action="/administrador/cadastrar" enctype="multipart/form-data">
+
+        {% endif %}
+
+        {% csrf_token %}
+        <label for="nome">Nome do Produto</label>
+        <input type="text" id="nome" name="nome" maxlength="200" placeholder="Digite o nome do produto" value="{{nome}}" required>
+        
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" rows="3" placeholder="Escreva uma descrição...">{{descricao}}</textarea>
+        
+        <label for="preco">Preço</label>
+          <input type="number" id="preco" name="preco" step="0.01" max="9999" placeholder="R$:" value="{{ preco }}"
+            required>
+        
+        <label for="imagem">Imagem</label>
+        <div class="file-upload" onclick="document.getElementById('imagem').click();">
+          {% if id_ %}
+          <span id="file-name">{{imagem|slice:""}}</span>
+          {% else %}
+          <span id="file-name">Clique para selecionar uma imagem</span>
+          {% endif %}
+          <input type="file" id="imagem" name="imagem" accept="image/*">
+        </div>
+        
+        
+        <label for="categoria">Categoria</label>
+<select id="categoria" name="categoria">
+  {% for categoria in categorias %}
+    <option value="{{ categoria.id }}"
+    {% if categoria.id == categoria_.id %}selected{% endif %}>
+      {{ categoria.nome }}
+    </option>
+  {% endfor %}
+</select>
+
+        
+        {% if estoque > 0 %}
+          <input type="number" id="estoque" name="estoque" value="{{estoque}}" min="0" max="1000">
+          {% else %}
+          <input type="number" id="estoque" name="estoque" value="0" min="0" max="1000">
+          {% endif %}
+          
+        <button type="submit">Salvar Produto</button>
+        
+        {% if status == '1' %}
+         <p class="message success">Cadastrado com sucesso</p>
+        {% endif %}
+      </form>
+    {% if id_ %}
+       <a id="moxima" href="/administrador/cadastrar">&larr;</a>
+    {% endif %}
+    </div>
+
+    <div class="form-section">
+      <h1 style="font-size: 24pt; margin-bottom: 5px; text-align: center; padding: 20px;">ㅤ</h1>
+      <div id="telefone-form">
+        <form method="POST" action="/administrador/numeros" role="form" data-toggle="validator" data-match="#inputToMatch">
+          {% csrf_token %}
+          <label for="telefone">Telefone:</label>
+          <input type="text" id="codigo_pais" name="codigo_pais" placeholder="+55" maxlength="3" required pattern="\+?\d{2,3}" title="Código do país (ex: +55)">
+          <input type="text" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" maxlength="15" required pattern="\(\d{2}\) \d{5}-\d{4}" title="Número no formato (XX) XXXXX-XXXX">
+          <div class="help-text">Formato esperado: +55 (XX) XXXXX-XXXX</div>
+          <button type="submit">Atualizar</button>
+          
+          {% if status == '22' %}
+          <p class="message success">Número atualizado com sucesso</p>
+          
+          {% endif %}
+        </form>
+      </div>
+
+      <div class="divider"></div>
+
+      <form method="POST" action="/administrador/cadastrar" class="category-form">
+        {% csrf_token %}
+        <label for="add_categoria">Adicionar categoria</label>
+        <input type="text" id="add_categoria" name="add_categoria" maxlength="200" required>
+        <button type="submit">Salvar Categoria</button>
+        {% if status == '2' %}
+      <p class="message success">Categoria adicionada</p>
+      {% elif status == '1000' %}
+      <p class="message error">Categoria ja existe</p>
+      {% endif %}
+      </form>
+
+      <form method="POST" action="/administrador/cadastrar">
+        {% csrf_token %}
+        <label for="remover">Remover categoria</label>
+        <input type="text" id="remover" name="remover_categoria" maxlength="200" required>
+        <button type="submit">Remover</button>
+      </form>
+      
+      {% if status == '3' %}
+      <p class="message success">Categoria removida</p>
+      {% elif status == '4' %}
+      <p class="message error">Categoria não existe</p>
+      {% endif %}
+
+      <a id="tblProd" href="/administrador/produtos">Tabela de Produtos</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("codigo_pais").addEventListener("input", function (e) {
+      if (e.target.value.length === 2 && !e.target.value.startsWith("+")) {
+        e.target.value = "+" + e.target.value;
+      }
+    });
+  
+    let telefone = document.getElementById("telefone");
+    telefone.addEventListener("input", () => {
+      let limparValor = telefone.value.replace(/\D/g, "").substring(0, 11);
+      let numero = "";
+  
+      if (limparValor.length > 0) {
+        numero += `(${limparValor.slice(0, 2)})`;
+      }
+      if (limparValor.length > 2) {
+        numero += ` ${limparValor.slice(2, 7)}`;
+      }
+      if (limparValor.length > 7) {
+        numero += `-${limparValor.slice(7, 11)}`;
+      }
+  
+      telefone.value = numero;
+    });
+  </script>
+   <script>
+    // Display selected file name
+    document.getElementById('imagem').onchange = function () {
+      document.getElementById('file-name').textContent = this.files[0].name;
+    };
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const span = document.getElementById('file-name');
+      let nomeImagem = span.textContent;
+  
+      // Verifica se o nome da imagem contém um caminho
+      if (nomeImagem.includes('/')) {
+        // Remove a parte do caminho e mantém apenas o nome do arquivo
+        nomeImagem = nomeImagem.split('/').pop(); // Pega apenas o nome do arquivo
+        span.textContent = nomeImagem;
+      }
+    });
+  </script>
+  <script src="https://kit.fontawesome.com/3f0e6eb963.js" crossorigin="anonymous"></script>
+</body>
+</html>
