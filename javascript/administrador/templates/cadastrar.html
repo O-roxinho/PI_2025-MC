@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../staticfiles/CSS/cadastro-styles.css">
+  
+  <title>Cadastro de Produto</title>
+  <script src="../staticfiles/JavaScript/verificar_loginUser.js"></script>
+  <script src="../staticfiles/JavaScript/dev.js"></script>
+
+  
+</head> 
+<body>
+  <a href="/" class="voltar">
+    <i class="fa-solid fa-house"></i>
+    <span class="tooltip">Voltar ao Início</span>
+  </a>
+
+  <div class="container">
+    <div class="header">     
+        <h1>Cadastro de Produto</h1>
+        <p>Preencha os dados para cadastrar um novo produto</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fas fa-box"></i>
+          Informações do Produto
+        </h2>
+      
+        <form id="enviar_cadastro_produto">
+      
+          <label for="nome">Nome do Produto</label>
+          <input type="text" id="nome" name="nome" maxlength="200" placeholder="Digite o nome do produto" required>
+
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" rows="3" placeholder="Descreva o produto..."></textarea>
+
+          <label for="preco">Preço</label>
+          <input type="number" id="preco" name="preco" step="0.01" max="9999" placeholder="R$ 0,00" required>
+
+          <label for="imagem">Imagem do Produto</label>
+          <div class="file-upload" onclick="document.getElementById('imagem').click();">
+            <i class="fas fa-cloud-upload-alt"></i>
+            
+            <span id="file-name">Clique para selecionar uma imagem</span>
+            
+            <input type="file" id="imagem" name="imagem" accept="image/*" style="display: none;">
+          </div>
+          
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecione uma categoria</option>
+            <!-- As opções serão preenchidas dinamicamente via JavaScript -->
+          </select>
+
+          <label for="estoque">Estoque</label>
+          
+          <input type="number" id="estoque" name="estoque" value="0" min="0" max="1000">
+
+          <button type="submit">
+            <i class="fas fa-save"></i>
+            Salvar Produto
+          </button>
+          
+         
+          <div class="message success-produto" id="message success-produto"> </div>
+            
+        </form>
+      </div>
+
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fas fa-cog"></i>
+          Configurações Adicionais
+        </h2>
+
+        <form id="numeros-form" class="mb-4">
+          <label for="telefone">Telefone de Contato</label>
+          <input type="text" id="codigo_pais" name="codigo_pais" placeholder="+55" maxlength="3" required>
+          <input type="text" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" maxlength="15" required>
+          <div class="help-text">Formato: +55 (XX) XXXXX-XXXX</div>
+          
+          <button type="submit">
+            <i class="fas fa-phone"></i>
+            Atualizar Telefone
+          </button>
+
+        </form>
+        <div id="message_telefone"></div>
+        <div class="divider"></div>
+
+        <h2 class="section-title">
+          <i class="fas fa-tags"></i>
+          Gerenciar Categorias
+        </h2>
+
+        <!-- Formulário para adicionar categoria -->
+    <div>
+      <label for="add_categoria">Nova Categoria</label>
+      <input type="text" id="add_categoria" maxlength="200" required>
+      <button id="btn_adicionar_categoria">
+        <i class="fas fa-plus"></i>
+        Adicionar Categoria
+      </button>
+    </div>
+
+    <!-- Formulário para remover categoria -->
+    <div class="mt-4">
+      <label for="remover_categoria">Remover Categoria</label>
+      <input type="text" id="remover_categoria" maxlength="200" required>
+      <button id="btn_remover_categoria" style="background: var(--danger-color)">
+        <i class="fas fa-trash-alt"></i>
+        Remover Categoria
+      </button>
+    </div>
+
+    <!-- Mensagens de sucesso/erro -->
+    <div id="message_categoria"></div>
+
+        <a href="/administrador/produtos" id="tblProd">
+          <i class="fas fa-table"></i>
+          Ver Todos os Produtos
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/3f0e6eb963.js" crossorigin="anonymous"></script>
+  <script>
+    document.getElementById("codigo_pais").addEventListener("input", function (e) {
+      if (e.target.value.length === 2 && !e.target.value.startsWith("+")) {
+        e.target.value = "+" + e.target.value;
+      }
+    });
+
+    let telefone = document.getElementById("telefone");
+    telefone.addEventListener("input", () => {
+      let limparValor = telefone.value.replace(/\D/g, "").substring(0, 11);
+      let numero = "";
+
+      if (limparValor.length > 0) {
+        numero += `(${limparValor.slice(0, 2)})`;
+      }
+      if (limparValor.length > 2) {
+        numero += ` ${limparValor.slice(2, 7)}`;
+      }
+      if (limparValor.length > 7) {
+        numero += `-${limparValor.slice(7, 11)}`;
+      }
+
+      telefone.value = numero;
+    });
+  </script>
+  <script>
+    // Display selected file name
+    document.getElementById('imagem').onchange = function () {
+      document.getElementById('file-name').textContent = this.files[0].name;
+    };
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const span = document.getElementById('file-name');
+      let nomeImagem = span.textContent;
+
+      // Verifica se o nome da imagem contém um caminho
+      if (nomeImagem.includes('/')) {
+        // Remove a parte do caminho e mantém apenas o nome do arquivo
+        nomeImagem = nomeImagem.split('/').pop(); // Pega apenas o nome do arquivo
+        span.textContent = nomeImagem;
+      }
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function updateFileName() {
+        const input = document.getElementById('imagem');
+        const span = document.getElementById('file-name');
+
+        console.log("Função chamada"); // Para confirmar que a função está sendo chamada
+
+        if (input.files.length === 1) {
+          span.textContent = input.files[0].name;
+        } else {
+          span.textContent = 'Clique para selecionar uma imagem';
+        }
+      }
+
+      document.getElementById("imagem").addEventListener("change", updateFileName);
+    });
+  </script>
+  <script src="../staticfiles/JavaScript/atualizar_numero.js"></script>
+  <script src="../staticfiles/JavaScript/cadastro-api.js"></script>
+  <script src="../staticfiles/JavaScript/adic_remove_categori.js"></script>
+  <script src="../staticfiles/JavaScript/categoria-api.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{produto.nome}}</title>
+
+    {% load static %}
+    <!-- parte header -->
+    <link rel="stylesheet" href="{% static 'CSS/loja_header.css' %}">
+    <!-- parte do input pesquisas -->
+    <link rel="stylesheet" href="{% static 'CSS/loja_pesquisa.css' %}">
+    <script src="{% static 'JavaScript/loja_pesquisa.js' %}" defer></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 4px 4px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+
+        }
+
+        .product-image {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            flex: 2;
+            padding: 20px;
+        }
+
+        .product-details h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-details .price {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6600;
+        }
+
+        .product-details .rating {
+            margin-bottom: 20px;
+            color: #ffcc00;
+            font-size: 25pt;
+        }
+
+        .product-details p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .product-details pre {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .product-details .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .product-details .buy-button {
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+
+        }
+
+        .product-details .buy-button img {
+            margin-right: 10px;
+            height: 40px;
+            width: 40px;
+        }
+
+        .product-details .buy-button:hover {
+            background-color: #218838;
+        }
+
+        .product-details .details-button {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .product-details .details-button:hover {
+            background-color: #0056b3;
+        }
+
+        #descriptionContainer {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+        }
+
+        #descriptionContainer.show {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+
+
+    </style>
+    <style>
+        /* Estilos para as estrelas de avaliação do produto */
+.icone-classificacao {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 2em;
+    overflow: hidden;
+    font-size: 40px;
+    color: #b2b6b3;
+}
+
+.icone-classificacao.cheio::before {
+    content: '★';
+    color: #FFD700; /* Cor da estrela cheia */
+}
+
+.icone-classificacao.meio::before {
+    content: '★';
+    color: #FFD700; /* Cor da estrela meia */
+    position: absolute;
+    width: 50%;
+    overflow: hidden;
+}
+
+.icone-classificacao.vazio::before {
+    content: '★';
+    color: #e0e0e0; /* Cor da estrela vazia */
+}
+.estrelas {
+    display: inline-flex;
+    font-size: 30px;
+    cursor: pointer;
+    color: #ccc; /* Cor padrão das estrelas */
+}
+
+.estrelas .estrela.selecionada {
+    color: #FFD700; /* Cor das estrelas selecionadas */
+}
+
+.estrelas .estrela:hover {
+    color: #FFD700; /* Cor das estrelas durante o hover */
+}
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu">
+            <div class="left">
+
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+                <div id="suggestions-box" class="suggestions-box">
+                </div>
+            </div>
+
+           <div class="user-container">
+                <div class="usuName">{{nome_usuario}}</div>
+                <a href="/administrador/login">
+                    <img id="imgUsu" src="{% static 'imagens_icons/user.png' %}" alt="Usuário">
+                </a>
+            </div>
+
+
+
+        </div>
+    </header>
+    <div class="container">
+        <div class="product-image">
+            <img src="{{produto.imagem.url}}" alt="Produto">
+        </div>
+        <div class="product-details">
+            <h1>{{produto.nome}}</h1>
+            <div class="price">R$: {{produto.preco}}</div>
+            <div class="classificacao">
+                {% load estrelas_tags %}
+                {% render_classificacao produto.calcular_nota_media as icones %}
+                {% for icone in icones %}
+                    <span class="icone-classificacao {{ icone }}">★</span>
+                {% endfor %}
+            </div>
+            <p>[ ... ]</p>
+            <div class="buttons">
+                <button class="buy-button" onclick="enviarProdutoWhatsApp({ id })">
+                    <img src=""
+                        alt="WhatsApp">
+                    SOLICITAR PEDIDO
+                </button>
+                <button class="details-button" id="toggleDescriptionBtn">VER MAIS DETALHES</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="descriptionContainer">
+        <div class="product-details">
+            <pre>{{produto.descricao}}</pre>
+        </div></div>
+
+        <div class="containerAvaliacao">
+            <style>
+                .estrela {
+                    font-size: 30px;
+                    cursor: pointer;
+                    color: #ccc; /* Cor padrão das estrelas */
+                }
+                #starsAv{
+                    font-size: 25pt;
+                    color: #ffd700;
+                }
+                .estrela.selecionada {
+                    color: #ffd700; /* Cor dourada para estrelas selecionadas */
+                }
+                .containerAvaliacao{
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 14.5%;
+                    margin-right: 14.5%;
+                    margin-bottom: 50px;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 4px 4px 4px 8px rgba(0, 0, 0, 0.1);
+                    padding: 20px
+                }
+                #avh2{
+                    text-transform: uppercase;
+                    margin-top: 5%;
+                    margin-bottom: 15px;
+                    font-size: 20pt;
+                }
+                #deixarAv{
+                    font-size: 20pt;
+                    text-transform: uppercase;
+                }
+                textarea{
+                    padding: 15px;
+                    border-radius: 5px;
+                    resize: none;
+                    border: 1px solid #dadada;
+                }
+                #sendAvalue{
+                    margin-top: 10px;
+                    width: 100%;
+                    height: 60px;
+                    border-radius: 5px;
+                    font-size: 20pt;
+                    text-transform: uppercase;
+                    background-color: #e67e22;
+                    border: none;
+                    color: white;
+                }
+                #sendAvalue:hover{
+                    background-color: #d35400;
+                }
+                .infosAvaliacao{
+                    margin-top: 25px;
+                    border-bottom: 1px solid #dadada;
+                }
+                #dataAv{
+                    float: right;
+                    color: #818181;
+
+                }
+                #nomeAv{
+                    font-size: 15pt;
+                    color: #e67e22;
+                }
+                #comentAv{
+                    font-size: 13pt;
+                }
+            </style>
+             <!-- Formulário de avaliação para usuários autenticados -->
+             {% if user.is_authenticated %}
+             <h3 id="deixarAv">Deixe sua avaliação:</h3>
+             <form id="avaliarForm" method="post" action="{% url 'avaliar_produto' produto.id %}">
+                 {% csrf_token %}
+
+                 <div id="avaliacao-estrelas" class="estrelas">
+                     {% for i in "12345" %}
+                         <span class="estrela" data-valor="{{ i }}">★</span>
+                     {% endfor %}
+                 </div>
+                 <input type="hidden" name="nota" id="nota" >
+
+
+                 <textarea name="comentario" id="comentario" rows="10" cols="147" placeholder="Deixe seu comentário...."></textarea>
+                 <br>
+                 <button id="sendAvalue" type="submit">Enviar Avaliação</button>
+             </form>
+            <!-- Formulário de avaliação para usuários autenticados -->
+            {% if user.is_authenticated %}
+
+                <div id="mensagem-avaliacao"></div>
+            {% endif %}
+         {% else %}
+             <p>Faça login para deixar uma avaliação.</p>
+         {% endif %}
+            <h2 id="avh2">Comentários ({{ produto.avaliacao_set.count }})</h2>
+            <div id="listaAvaliacoes">
+                {% include 'comentarios.html' %}
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+        // Função para carregar todas as avaliações
+        function carregarAvaliacoes() {
+            $.ajax({
+                url: '{% url "carregar_avaliacoes" produto.id %}',
+                type: 'GET',
+                success: function(response) {
+                    $('#listaAvaliacoes').html(response.html);
+                }
+            });
+        }
+
+        // Enviar nova avaliação via AJAX e atualizar comentários
+        $('#avaliarForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '{% url "avaliar_produto" produto.id %}',
+                type: 'POST',
+                data: $(this).serialize(),
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                success: function(response) {
+                    $('#mensagem-avaliacao').text(response.mensagem);  // Exibe mensagem de sucesso
+                    carregarAvaliacoes(); // Recarrega os comentários
+                }
+            });
+        });
+
+        // Carrega as avaliações iniciais ao carregar a página
+        carregarAvaliacoes();
+    });
+        </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const estrelas = document.querySelectorAll('.estrela');
+    const notaInput = document.getElementById('nota');
+    let notaSelecionada = parseInt(notaInput.value) || 0;
+
+    // Função para atualizar a aparência das estrelas até o valor especificado
+    function atualizaEstrelas(valor) {
+        estrelas.forEach((estrela, index) => {
+            if (index < valor) {
+                estrela.classList.add('selecionada');
+            } else {
+                estrela.classList.remove('selecionada');
+            }
+        });
+    }
+
+    // Define as estrelas com base na seleção ao carregar a página
+    atualizaEstrelas(notaSelecionada);
+
+    // Adiciona eventos de mouseover, mouseleave e clique
+    estrelas.forEach((estrela, index) => {
+        const valor = index + 1;
+
+        // Passar o mouse sobre as estrelas para mostrar a nota temporariamente
+        estrela.addEventListener('mouseover', () => {
+            atualizaEstrelas(valor);
+        });
+
+        // Retorna ao valor original ao sair das estrelas, se nenhuma estiver clicada
+        estrela.addEventListener('mouseleave', () => {
+            atualizaEstrelas(notaSelecionada);
+        });
+
+        // Clique para fixar a nota
+        estrela.addEventListener('click', () => {
+            notaSelecionada = valor;
+            notaInput.value = valor;
+            atualizaEstrelas(valor);
+        });
+    });
+});
+
+
+</script>
+
+    </div>
+    <script>
+        // Script para enviar o formulário de avaliação via AJAX
+        document.getElementById('form-avaliacao').onsubmit = function(event) {
+            event.preventDefault();
+            const form = event.target;
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('mensagem-avaliacao').textContent = data.mensagem;
+                // Atualiza a nota média e exibe a nova avaliação sem recarregar a página
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        }
+    </script>
+
+    <script>
+        document.getElementById('toggleDescriptionBtn').addEventListener('click', function () {
+            var descriptionContainer = document.getElementById('descriptionContainer');
+            if (descriptionContainer.classList.contains('show')) {
+                descriptionContainer.classList.remove('show');
+                this.innerText = "VER MAIS DETALHES";
+            } else {
+                descriptionContainer.classList.add('show');
+                this.innerText = "VER MENOS DETALHES";
+            }
+        });
+    </script>
+
+    <script>
+        function enviarProdutoWhatsApp(produtoId) {
+    fetch(`/enviar-produto-whatsapp/${produtoId}/`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erro ao enviar o produto para o WhatsApp');
+            }
+        })
+        .then(data => {
+            if (data.url) {
+                window.open(data.url, '_blank');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+}
+
+    </script>
+</body>
+
+</html>

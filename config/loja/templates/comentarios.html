@@ -1,0 +1,121 @@
+<style>
+
+    .infosAvaliacao {
+        display: flex; /* Usa flexbox para alinhar os itens em linha */
+        justify-content: space-between; /* Faz o botão ficar à direita */
+        align-items: flex-start; /* Ajusta o alinhamento vertical dos itens */
+        flex-wrap: wrap; /* Permite que os itens se ajustem em linha */
+    }
+
+    .comentario-container {
+        flex-grow: 1; /* Faz o comentário ocupar o espaço disponível */
+        display: flex;
+        flex-direction: column; /* Organiza o texto em coluna */
+    }
+
+    .excluir-comentario {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 13pt;
+        color: #696969;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        align-self: center; /* Garante que o botão fique alinhado verticalmente */
+        top: 30px;
+        right: 25px;
+    }
+
+    .excluir-comentario:hover {
+        color: #d35400;
+    }
+
+    .tooltip {
+        visibility: hidden;
+        opacity: 0;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        position: absolute;
+        top: -40px; /* Acima do botão */
+        left: 50%;
+        transform: translateX(-50%);
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 10;
+        font-size: 10pt;
+    }
+
+    .excluir-comentario:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
+    /*#dataAv{
+        position: relative;
+        left: 40px;
+    }*/
+
+
+</style>
+
+
+{% load custom_tags %}
+
+{% for avaliacao in avaliacoes %}
+    <div class="infosAvaliacao" id="comentario-{{ avaliacao.id }}">
+        <div class="comentario-container">
+            <p id="nomeAv">
+                <strong>{{ avaliacao.usuario.username }}</strong>
+                <span id="dataAv">{{ avaliacao.data_avaliacao|date:"d/m/Y H:i" }}</span>
+            </p>
+            <p id="starsAv">{% render_estrelas avaliacao.nota %}</p>
+            <p id="comentAv">"{{ avaliacao.comentario }}"</p>
+        </div>
+        {% if user.is_authenticated %}
+            {% if user == avaliacao.usuario or user.is_staff %}
+                <button class="excluir-comentario" data-id="{{ avaliacao.id }}" aria-label="Excluir comentário">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span class="tooltip">Excluir...</span>
+                </button>
+            {% endif %}
+        {% endif %}
+    </div>
+{% empty %}
+    <p>Este produto ainda não possui avaliações.</p>
+{% endfor %}
+
+
+
+
+<script src="https://kit.fontawesome.com/3f0e6eb963.js" crossorigin="anonymous"></script>
+
+<script>
+    document.querySelectorAll('.excluir-comentario').forEach(button => {
+        button.addEventListener('click', function() {
+            const comentarioId = this.getAttribute('data-id');
+
+            // Envia a requisição AJAX para excluir o comentário
+            fetch(`/excluir_comentario/${comentarioId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // Garante que é uma requisição AJAX
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',  // Envia o token CSRF para segurança
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Remove o comentário da página
+                    document.getElementById(`comentario-${comentarioId}`).remove();
+                } else {
+                    alert("Erro ao excluir o comentário.");
+                }
+            });
+        });
+    });
+</script>
+
+

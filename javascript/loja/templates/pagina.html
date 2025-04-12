@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Mundo das Coisas</title>
+   
+    <link rel="stylesheet" href="../static/CSS/loja_header.css">
+    <link rel="stylesheet" href="../static/CSS/loja_pesquisa.css">
+
+    <link rel="stylesheet" href="../static/CSS/categoria.css">
+    <!-- <script src="../staticfiles/JavaScript/carrosel.js" defer></script> -->
+
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .caixa {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+            margin-left: 3%;
+            margin-right: 3%;
+            border-radius: 9px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: left;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: hidden; /* Oculta a barra de rolagem */
+            scroll-behavior: smooth; /* Rolagem suave */
+        }
+        .product-card {
+            background-color: #ffffff;
+            padding: 20px;
+
+            border-radius: 8px;
+
+
+            flex: 0 0 200px;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            /* essa aqui foi tiktok */
+            mix-blend-mode: multiply;
+        }
+        .product-card h2 {
+            font-size: 14pt;
+            margin: 10px 0;
+        }
+        .product-card:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-color: #333;
+            background-color: #e0dfdf;
+        }
+
+        .price {
+            font-size: 13pt;
+            color: #333;
+            font-weight: bold;
+            text-align: right;
+        }
+        .installment,
+        .free-shipping {
+            font-size: 10pt;
+            color: #28a745;
+            margin-top: 5%;
+            text-align: center;
+        }
+        main{
+            margin-top: 20px;
+        }
+        #btn_ver {
+            position: absolute;
+            padding: 0;
+            left: 90%;
+            bottom: 90.9%;
+            font-size: 20px;
+            color: #d35400;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+        }
+        #btn_ver:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+    
+</head>
+
+<body>
+    <header>
+        <div class="menu">
+            <div class="left">
+
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+                <div id="suggestions-box" class="suggestions-box">
+                </div>
+            </div>
+
+           <div class="user-container">
+                <div class="usuName" id="usuName"></div>
+                <a href="../../login">
+                    <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
+                </a>
+            </div>
+
+        </div>
+    </header><br><br>
+    <main class="container">
+        <div class="row" id="categorias-container">
+            <!-- Loading state -->
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../static/JavaScript/loja_pesquisa.js"></script>
+    <script src="../static/JavaScript/carrosel.js"></script>
+    <script src="../static/JavaScript/principal.js"></script>
+    <script src="../static/JavaScript/usuario.js"> </script>
+</body>
+</html>

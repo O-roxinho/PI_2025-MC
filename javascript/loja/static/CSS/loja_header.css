@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+
+}
+
+header {
+  /* background-color: #ff5622; */
+  background-color: #ec821a;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+
+  .left {
+      display: flex;
+      align-items: center;
+
+  }
+
+  .hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      margin-right: 10px;
+  }
+
+  .logo {
+      font-size: 24px;
+  }
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    padding: 0 10px;
+}
+
+.search {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 400px;
+    text-align: center;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    min-width: 0;
+}
+
+.usuName {
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: block;
+    font-size: 15px;
+}
+
+#imgUsu {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    object-fit: cover;
+}
+
+  .cart {
+      font-size: 30px;
+      margin-left: 20px;
+      cursor: pointer;
+  }
+
+/* Tablets */
+@media (max-width: 768px) {
+    .menu {
+        padding: 0 8px;
+    }
+
+    .search {
+        width: 300px;
+    }
+
+    .usuName {
+        max-width: 120px;
+        font-size: 14px;
+        display: block;
+    }
+
+    #imgUsu {
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+    }
+
+    .hamburger {
+        font-size: 26px;
+    }
+
+    .cart {
+        font-size: 26px;
+        margin-left: 15px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    header {
+        padding: 8px;
+    }
+
+    .menu {
+        padding: 0 5px;
+    }
+
+    .search {
+        width: 200px;
+        padding: 8px;
+    }
+
+    .usuName {
+        max-width: 100px;
+        font-size: 13px;
+        display: block;
+    }
+
+    #imgUsu {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+
+    .hamburger {
+        font-size: 24px;
+        margin-right: 8px;
+    }
+
+    .cart {
+        font-size: 24px;
+        margin-left: 10px;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 360px) {
+    header {
+        padding: 6px;
+    }
+
+    .menu {
+        padding: 0 4px;
+    }
+
+    .search {
+        width: 160px;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    .usuName {
+        max-width: 80px;
+        font-size: 12px;
+        display: block;
+    }
+
+    #imgUsu {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+    }
+
+    .hamburger {
+        font-size: 22px;
+        margin-right: 6px;
+    }
+
+    .cart {
+        font-size: 22px;
+        margin-left: 8px;
+    }
+}
