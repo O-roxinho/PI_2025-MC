@@ -1,0 +1,28 @@
+GitHub Steps
+
+abre o VS Code, vai no terminal la em cima na esquerda-> new terminal (pode ser powershell msm)
+
+nele:
+
+cd {folder}
+git init
+
+git add (arquivo para mudança ou add [usar . para add o folder inteiro])
+git commit -m {comentário com ""}
+
+(arrumar a origin do nosso repositório, depois de fazer uma vez n precisa mais)
+git remote add origin <link to repository, ending with ".git">
+git remote -v
+
+(caso tenha outra origin, ao invés de tirar e colocar dá pra usar)
+git remote set-url {origin}
+
+git push --set-upstream origin {nome master/main}
+
+beleza! Tudo certo pra utilizar nosso repositório
+
+git add (arquivo para mudança ou add [usar . para add o folder inteiro])
+git commit -m "Mensagem"
+git push
+
+agora vai carregar tudo e já era >:D
