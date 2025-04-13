@@ -1,0 +1,30 @@
+// No seu arquivo JavaScript (carrinho.js ou similar)
+async function loadCart() {
+    try {
+        const authToken = localStorage.getItem('token');
+        
+        const API_BASE = "http://127.0.0.1:8000"
+        
+        if (!authToken) {
+            window.location.href = '/login?next=/carrinho';
+            return;
+        }
+
+        const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+            headers: {
+                'Authorization': `Token ${authToken}`
+            }
+        });
+        
+        if (!response.ok) throw new Error('Erro ao carregar carrinho');
+        
+        const cart = await response.json();
+        renderCart(cart);
+    } catch (error) {
+        console.error('Erro:', error);
+        if (error.message.includes('401')) {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login?next=/carrinho';
+        }
+    }
+}

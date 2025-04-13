@@ -1,0 +1,699 @@
+.review {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.infosAvaliacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.comentario-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 50px);
+    min-width: 0;
+}
+
+#nomeAv {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#nomeAv strong {
+    color: #e67e22;
+    font-size: 15pt;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    min-width: 100px;
+}
+
+#starsAv {
+    color: #ffd700;
+    font-size: 19pt;
+    margin: 0;
+    white-space: nowrap;
+    line-height: 1;
+    padding: 0;
+}
+
+#dataAv {
+    color: #333;
+    font-size: 14pt;
+    font-weight: 500;
+    margin-left: auto;
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+#comentAv {
+    font-size: 13pt;
+    margin-top: 8px;
+    word-wrap: break-word;
+    line-height: 1.4;
+    width: 100%;
+}
+
+.excluir-comentario {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 13pt;
+    color: #696969;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.excluir-comentario:hover {
+    color: #d35400;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+    font-size: 10pt;
+}
+
+.excluir-comentario:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .review {
+        padding: 12px;
+    }
+
+    #nomeAv strong {
+        font-size: 13pt;
+        max-width: 160px;
+    }
+
+    #starsAv {
+        font-size: 17pt;
+    }
+
+    #dataAv {
+        font-size: 12pt;
+    }
+
+    #comentAv {
+        font-size: 12pt;
+        line-height: 1.3;
+    }
+
+    .excluir-comentario {
+        width: 34px;
+        height: 34px;
+        font-size: 12pt;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .review {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .infosAvaliacao {
+        margin-bottom: 8px;
+    }
+
+    .comentario-container {
+        width: calc(100% - 40px);
+    }
+
+    #nomeAv {
+        gap: 5px;
+        margin-bottom: 2px;
+    }
+
+    #nomeAv strong {
+        font-size: 12pt;
+        max-width: 120px;
+        min-width: 80px;
+    }
+
+    #starsAv {
+        font-size: 15pt;
+    }
+
+    #dataAv {
+        font-size: 11pt;
+        padding-right: 8px;
+    }
+
+    #comentAv {
+        font-size: 11pt;
+        margin-top: 5px;
+        line-height: 1.3;
+    }
+
+    .excluir-comentario {
+        width: 30px;
+        height: 30px;
+        font-size: 11pt;
+    }
+
+    .tooltip {
+        display: none;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 360px) {
+    .review {
+        padding: 8px;
+    }
+
+    .comentario-container {
+        width: calc(100% - 35px);
+    }
+
+    #nomeAv {
+        gap: 4px;
+    }
+
+    #nomeAv strong {
+        font-size: 11pt;
+        max-width: 100px;
+        min-width: 60px;
+    }
+
+    #starsAv {
+        font-size: 14pt;
+    }
+
+    #dataAv {
+        font-size: 10pt;
+        padding-right: 6px;
+    }
+
+    #comentAv {
+        font-size: 10pt;
+        line-height: 1.2;
+        margin-top: 4px;
+    }
+
+    .excluir-comentario {
+        width: 28px;
+        height: 28px;
+        font-size: 10pt;
+    }
+}
+
+
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+        .product-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #product-name {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #product-price {
+            font-size: 1.8rem;
+            color: #ff6600;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        #product-rating {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+
+        #product-description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos do botão WhatsApp */
+        #whatsapp-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #whatsapp-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        #whatsapp-button:hover {
+            background-color: #218838;
+        }
+
+        /* Seção de avaliações */
+        .reviews {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .reviews h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .review-content {
+            margin-bottom: 10px;
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .delete-review {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #dc3545;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .delete-review:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #c82333;
+        }
+
+        .delete-review i {
+            font-size: 16px;
+        }
+
+        /* Estilo para ícone de lixeira */
+        .trash-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"/></svg>');
+        }
+
+        /* Estilo para tooltip do botão de excluir */
+        .delete-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+            z-index: 1000;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .delete-review:hover .delete-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Estilo para indicador de admin */
+        .admin-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+        }
+
+        .review strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .review .rating {
+            color: #ffcc00;
+            margin-left: 10px;
+        }
+
+        .review p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .review small {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        /* Formulário de avaliação */
+        #review-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #review-form h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #star-rating {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .star {
+            cursor: pointer;
+            padding: 0 2px;
+            transition: color 0.2s ease;
+        }
+
+        #review-text {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        #submit-review {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #submit-review:hover {
+            background-color: #0056b3;
+        }
+
+        #auth-message {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #auth-message p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        #auth-message a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        #auth-message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Queries para responsividade */
+        @media (max-width: 768px) {
+            .product-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            #product-name {
+                font-size: 1.5rem;
+            }
+
+            #product-price {
+                font-size: 1.3rem;
+            }
+
+            .reviews {
+                padding: 15px;
+            }
+
+            #review-form {
+                padding: 15px;
+            }
+
+            .star {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-container {
+                width: 100%;
+                padding: 10px;
+                margin: 10px auto;
+            }
+
+            #product-name {
+                font-size: 1.2rem;
+            }
+
+            #product-price {
+                font-size: 1.1rem;
+            }
+
+            #whatsapp-button {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            .review {
+                padding: 10px;
+            }
+
+            #review-form h3 {
+                font-size: 1rem;
+            }
+
+            #star-rating {
+                font-size: 1.2rem;
+            }
+        }
+   
+        /* Estilos para as estrelas de avaliação do produto */
+.icone-classificacao {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 2em;
+    overflow: hidden;
+    font-size: 40px;
+    color: #b2b6b3;
+}
+
+.icone-classificacao.cheio::before {
+    content: '★';
+    color: #FFD700; /* Cor da estrela cheia */
+}
+
+.icone-classificacao.meio::before {
+    content: '★';
+    color: #FFD700; /* Cor da estrela meia */
+    position: absolute;
+    width: 50%;
+    overflow: hidden;
+}
+
+.icone-classificacao.vazio::before {
+    content: '★';
+    color: #e0e0e0; /* Cor da estrela vazia */
+}
+.estrelas {
+    display: inline-flex;
+    font-size: 30px;
+    cursor: pointer;
+    color: #ccc; /* Cor padrão das estrelas */
+}
+
+.estrelas .estrela.selecionada {
+    color: #FFD700; /* Cor das estrelas selecionadas */
+}
+
+.estrelas .estrela:hover {
+    color: #FFD700; /* Cor das estrelas durante o hover */
+}
+
+   
+
+        .infosAvaliacao {
+            display: flex; /* Usa flexbox para alinhar os itens em linha */
+            justify-content: space-between; /* Faz o botão ficar à direita */
+            align-items: flex-start; /* Ajusta o alinhamento vertical dos itens */
+            flex-wrap: wrap; /* Permite que os itens se ajustem em linha */
+        }
+    
+        .comentario-container {
+            flex-grow: 1; /* Faz o comentário ocupar o espaço disponível */
+            display: flex;
+            flex-direction: column; /* Organiza o texto em coluna */
+        }
+    
+        .excluir-comentario {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 13pt;
+            color: #696969;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            align-self: center; /* Garante que o botão fique alinhado verticalmente */
+            top: 30px;
+            right: 25px;
+        }
+    
+        .excluir-comentario:hover {
+            color: #d35400;
+        }
+    
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            position: absolute;
+            top: -40px; /* Acima do botão */
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10;
+            font-size: 10pt;
+        }
+    
+        .excluir-comentario:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        /*#dataAv{
+            position: relative;
+            left: 40px;
+        }*/
+    

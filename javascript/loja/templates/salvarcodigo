@@ -1,0 +1,6 @@
+<div class="cart-icon">
+    <a href="/carrinho" id="cart-link">
+        <img src="/static/imagens_icons/cart.png" alt="Carrinho">
+        <span id="cart-count">0</span>
+    </a>
+</div>

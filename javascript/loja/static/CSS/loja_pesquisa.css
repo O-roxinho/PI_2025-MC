@@ -1,0 +1,168 @@
+.search-bar {
+    position: relative;
+    margin: 0 auto;
+    left: 20%;
+    display: inline-block;
+    width: 300px; 
+}
+
+#search-input{
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+#suggestions-box {
+    position: absolute;
+    background-color: #fff;
+    
+    border-radius: 5px;
+    width: 135%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000; 
+    margin-top: 5px;
+
+}
+
+
+.suggestion-item {
+    display: flex; 
+    align-items: center;
+    padding: 10px; 
+    text-decoration: none; 
+    color: #333; 
+    border-bottom: 1px solid #dadada;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+
+}
+
+/* Para as imagens */
+.suggestion-img {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 10px; 
+    border-radius: 5px; 
+}
+
+/* Para a seção de informações do produto */
+.suggestion-info {
+    display: flex;
+    flex-direction: column; 
+}
+
+.suggestion-info p {
+    margin: 0; 
+    font-size: 14px;
+}
+
+.suggestion-info strong {
+    color: #3640638c;
+    font-size: 16px;
+}
+
+/* Estilo para links dentro do item de sugestão */
+a {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 250px;
+        left: 15%;
+    }
+
+    .suggestion-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .suggestion-info p {
+        font-size: 13px;
+    }
+
+    .suggestion-info strong {
+        font-size: 15px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .search-bar {
+        width: 200px;
+        left: 10%;
+    }
+
+    #suggestions-box {
+        width: 150%;
+        max-height: 180px;
+    }
+
+    .suggestion-item {
+        padding: 8px;
+    }
+
+    .suggestion-img {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .suggestion-info p {
+        font-size: 12px;
+    }
+
+    .suggestion-info strong {
+        font-size: 14px;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 360px) {
+    .search-bar {
+        width: 160px;
+        left: 5%;
+    }
+
+    #suggestions-box {
+        width: 160%;
+        max-height: 160px;
+    }
+
+    .suggestion-item {
+        padding: 6px;
+    }
+
+    .suggestion-img {
+        width: 28px;
+        height: 28px;
+        margin-right: 6px;
+    }
+
+    .suggestion-info p {
+        font-size: 11px;
+    }
+
+    .suggestion-info strong {
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

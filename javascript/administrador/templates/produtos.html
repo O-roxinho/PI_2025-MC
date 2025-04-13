@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela de Produtos</title>
+  <script src="../staticfiles/JavaScript/verificar_loginUser.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="../staticfiles/JavaScript/dev.js"></script>
+  <link rel="stylesheet" href="../staticfiles/CSS/produtos-styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="page-title">Gerenciamento de Produtos</h1>
+    <div class="table-responsive">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Imagem</th>
+            <th>Categoria</th>
+            <th>Estoque</th>
+            <th>Excluir</th>
+            <th>Atualizar</th>
+          </tr>
+        </thead>
+        <tbody id="lista-produtos">
+          <!-- criado em javascript -->
+        </tbody>
+      </table>
+    </div>
+    <a href="/administrador/cadastrar" class="voltar">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+  </div>
+
+<script src="../staticfiles/JavaScript/tabela_produtos-api.js">
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/3f0e6eb963.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho</title>
+    <link rel="stylesheet" href="/static/CSS/loja_header.css">
+    <style>
+        .cart-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-right: 20px;
+        }
+        
+        .cart-item-info {
+            flex-grow: 1;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-total {
+            text-align: right;
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto 0;
+            padding: 15px;
+            background: #28a745;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Mesmo header da página de produtos -->
+    </header>
+
+    <div class="cart-container">
+        <h1>Meu Carrinho</h1>
+        <div id="cart-items">
+            <!-- Itens serão carregados via JavaScript -->
+        </div>
+        <div class="cart-total">
+            Total: <span id="cart-total">R$ 0,00</span>
+        </div>
+        <button class="checkout-btn">Finalizar Compra</button>
+    </div>
+    <!-- Adicione isso no seu template base ou carrinho.html -->
+    <script src="static/carrinho.js"></script>
+<script>
+    const API_BASE = 'http://127.0.0.1:8000'; // Ajuste para sua URL
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const authToken = localStorage.getItem('token');
+        
+        
+        if (!authToken) {
+            window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
+            return;
+        }
+    
+        // Elementos da interface
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+    
+        // Carrega o carrinho
+        loadCart();
+    
+        async function loadCart() {
+            try {
+                const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+                    headers: {
+                        'Authorization': `Token ${authToken}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    throw new Error('Não autorizado');
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar carrinho');
+                }
+                
+                const cart = await response.json();
+                console.log(cart)
+                renderCart(cart);
+            } catch (error) {
+                console.error('Erro:', error);
+                if (error.message.includes('Não autorizado')) {
+                    localStorage.removeItem('authToken');
+                    window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
+                } else {
+                    cartItems.innerHTML = `<p class="error">${error.message}</p>`;
+                }
+            }
+        }
+    
+        function renderCart(cart) {
+            if (cart.itens.length === 0) {
+                cartItems.innerHTML = '<p>Seu carrinho está vazio</p>';
+                cartTotal.textContent = 'R$ 0,00';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.itens.map(item => `
+                <div class="cart-item">
+                    <img src="${item.produto.imagem_url}" alt="${item.produto.nome}">
+                    <div class="item-details">
+                        <h3>${item.produto.nome}</h3>
+                        <p>Preço: R$ ${parseFloat(item.produto.preco).toFixed(2)}</p>
+                        <p>Quantidade: ${item.quantidade}</p>
+                        <button onclick="removeItem(${item.id})">Remover</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            cartTotal.textContent = `R$ ${cart.total.toFixed(2)}`;
+        }
+    
+        window.removeItem = async function(itemId) {
+            try {
+                const response = await fetch(`${API_BASE}/api/carrinho/itens/${itemId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Token ${authToken}`
+                    }
+                });
+                
+                if (response.ok) {
+                    loadCart();
+                } else {
+                    throw new Error('Falha ao remover item');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert(error.message);
+            }
+        };
+    
+        checkoutBtn.addEventListener('click', () => {
+            alert('Redirecionando para checkout...');
+            // Implemente a lógica de checkout aqui
+        });
+    });
+    </script>
+
+    
+</body>
+</html>

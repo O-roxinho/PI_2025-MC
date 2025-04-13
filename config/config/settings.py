@@ -29,9 +29,15 @@ INSTALLED_APPS = [
     'administrador',
     'login',
     'loja',
+    'carrinho_de_compra',
 ]
 
+INSTALLED_APPS += ['corsheaders',
+                   'rest_framework',
+                    'rest_framework.authtoken',]
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Middleware do CORS antes de tudo
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,6 +47,25 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # Autenticação por token
+    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',  # exige login
+    # ],
+     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
+
+CORS_ALLOW_ALL_ORIGINS = True  # Permite qualquer origem (uso temporário)
+CORS_ALLOW_CREDENTIALS = True  # Permite envio de cookies e autenticação
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+CORS_ALLOW_HEADERS = ["*"]  # Permite todos os cabeçalhos
+
 
 ROOT_URLCONF = 'config.urls'
 

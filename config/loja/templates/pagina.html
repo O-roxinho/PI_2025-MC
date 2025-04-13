@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
     rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!-- fim do bootstrap -->
@@ -17,7 +17,7 @@
     <script src="{% static 'JavaScript/loja_pesquisa.js' %}" defer></script>
     <script src="{% static 'JavaScript/carrosel.js' %}" defer></script>
 
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
         .container {
@@ -47,13 +47,13 @@
             overflow-x: hidden; /* Oculta a barra de rolagem */
             scroll-behavior: smooth; /* Rolagem suave */
         }
-        .product-card { 
+        .product-card {
             background-color: #ffffff;
             padding: 20px;
-            
+
             border-radius: 8px;
-            
-            
+
+
             flex: 0 0 200px;
         }
         .product-card img {
@@ -61,7 +61,7 @@
             height: auto;
             border-radius: 4px;
             /* essa aqui foi tiktok */
-            mix-blend-mode: multiply; 
+            mix-blend-mode: multiply;
         }
         .product-card h2 {
             font-size: 14pt;
@@ -89,29 +89,50 @@
         main{
             margin-top: 20px;
         }
-        
+        #btn_ver {
+            position: absolute;
+            padding: 0;
+            left: 90%;
+            bottom: 90.9%;
+            font-size: 20px;
+            color: #d35400;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+        }
+        #btn_ver:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+
+
     </style>
 </head>
 <body>
     <header>
         <div class="menu">
             <div class="left">
-                <div class="hamburger">&#9776;</div>
-                <a href="/">
-                    <div class="usuName">{{nome_usuario}}</div>
-                </a>
+
             </div>
             <div class="search-bar">
                 <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
                 <div id="suggestions-box" class="suggestions-box">
                 </div>
             </div>
-            <a href="/administrador/login">
-                <div class="cart"> <!-- &#128722; -->
-                    <img id="imgUsu" width="40" src="{% static 'imagens_icons/user.png'  %}" alt="">
-                </div>
-            </a>
-            
+
+           <div class="user-container">
+                <div class="usuName">{{nome_usuario}}</div>
+                <a href="/administrador/login">
+                    <img id="imgUsu" src="{% static 'imagens_icons/user.png' %}" alt="Usuário">
+                </a>
+            </div>
+
+
+
         </div>
     </header><br><br>
     <main class="container">
@@ -124,13 +145,25 @@
             <section class="col-12 mb-5 categoria-section categoria-{{ categoria.id }} categoria-{{ categoria.nome }}">
                 <div class="container caixa">
                     <h1 class="text-left">{{ categoria.nome }}</h1>
-    
+
+
+                    {% if categoria.num_produtos > 5 %}
+                    <form method="POST" action="{% url 'mais_produtos' categoria.nome %}">
+                            {% csrf_token %}
+                            <button id="btn_ver" type="submit">Ver Mais</button>
+                    </form>
+                    {% endif %}
+
                     <div class="position-relative">
                         <div class="product-grid d-flex flex-row overflow-auto" id="carousel-{{ categoria.id }}">
                             {% for produto in categoria.produtos_limited %}
                             <div class="product-card p-3 mx-2 col-6 col-md-4 col-lg-3">
                                 <a href="/produto/{{ produto.id }}">
-                                    <img src="{{ produto.imagem.url }}" class="img-fluid" alt="">
+                                    {% if produto.imagem %}
+                                        <img src="{{ produto.imagem.url }}" class="img-fluid" alt="">
+                                    {% else %}
+                                        <p>sem imagem</p>
+                                    {% endif %}
                                 </a>
                                 <h2 id="prdName">{{ produto.nome }}</h2>
                                 <p class="price">R$ {{ produto.preco }}</p>
@@ -140,7 +173,7 @@
                             </div>
                             {% endfor %}
                         </div>
-    
+
                         <!-- Botões de navegação fora do contêiner do carrossel -->
                         <button class="carousel-btn left" onclick="scrollCarousel('{{ categoria.id }}', -400)" style="display: none;">&#10094;</button>
                         <button class="carousel-btn right" onclick="scrollCarousel('{{ categoria.id }}', 400)" style="display: none;">&#10095;</button>
@@ -149,10 +182,10 @@
             </section>
             {% endif %} <br>
             {% endfor %}
-            
+
         </div>
-        
+
     </main>
-    
+
 </body>
 </html>

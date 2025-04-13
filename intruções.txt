@@ -1,0 +1,21 @@
+primeiro abaixe python caramba
+depois vai no terminal e digita "python executar.py"
+copia a url, exemplo: http://127.0.0.1:8000/
+vai em na pasta javascript/administrador/staticfiles/dev/.js e abre 
+ai só trocar a url lá
+e abrir as telas do google
+
+* caso não funcione o executar.py, faça esse jeito
+python -m venv venv
+venv\Scripts\activate
+pip install Django Pillow djangorestframework djangorestframework-simplejwt django-cors-headers pywin32 whitenoise 
+python config/manage.py runserver
+
+Para ativar o node:
+no VS CODE, terminal em cima>novo terminal
+cria um novo em Command Prompt
+utiliza o comando cd {caminho da pasta node no projeto}
+estando dentro dela, utilizar o comando "node index.js"
+entrar no site localhost que vai aparecer embaixo!
+caso precise está aqui
+http://localhost:8080

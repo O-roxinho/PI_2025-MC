@@ -1,17 +1,26 @@
 .search-bar {
     position: relative;
+    margin: 0 auto;
+    left: 20%;
     display: inline-block;
     width: 300px; /* Ajuste a largura conforme necessário */
 }
 
+#search-input{
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
 #suggestions-box {
     position: absolute;
-    background-color: #fff;   
+    background-color: #fff;
+    /*border: 1px solid #dadada;*/
     border-radius: 5px;
     width: 135%;
     max-height: 200px;
     overflow-y: auto;
-    z-index: 1000;
+    z-index: 1000; /* Garantir que a caixa apareça acima */
+    margin-top: 5px;
+
 }
 
 
@@ -21,10 +30,12 @@
     padding: 10px; /* Espaçamento interno */
     text-decoration: none; /* Remove o sublinhado do link */
     color: #333; /* Cor padrão do texto */
+    border-bottom: 1px solid #dadada;
 }
 
 .suggestion-item:hover {
     background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+
 }
 
 /* Para as imagens */
@@ -58,101 +69,18 @@ a {
     color: inherit; /* Mantém a cor do texto igual ao elemento pai */
 }
 
-@media (max-width: 768px) {
-    .container {
-        max-width: 100%;
-        padding: 0 10px;
-    }
 
-    .caixa {
-        padding: 15px;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-    .logo{
-        font-size: 20px;
-        padding-right: 10px;
-    }
 
-    h1 {
-        font-size: 20px;
-        text-align: center;
-    }
 
-    .product-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
 
-    .product-card {
-        flex: 1 1 auto;
-        padding: 15px;
-    }
 
-    .product-card h2 {
-        font-size: 12pt;
-    }
 
-    .price {
-        font-size: 11pt;
-        text-align: center;
-    }
 
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
 
-    .search {
-        width: 250px;
-    }
 
-    #suggestions-box {
-        width: 100%;
-    }
-}
 
-@media (max-width: 480px) {
-    .container {
-        max-width: 100%;
-        padding: 0 5px;
-    }
 
-    .caixa {
-        padding: 10px;
-        margin-left: 2%;
-        margin-right: 2%;
-    }
 
-    h1 {
-        font-size: 18px;
-    }
 
-    .product-card {
-        padding: 10px;
-    }
 
-    .product-card h2 {
-        font-size: 10pt;
-    }
 
-    .price {
-        font-size: 10pt;
-    }
-
-    .carousel-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-    }
-
-    .search {
-        width: 200px;
-    }
-
-    #suggestions-box {
-        width: 100%;
-    }
-}

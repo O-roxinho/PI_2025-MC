@@ -7,6 +7,7 @@ urlpatterns = [
     path('administrador/', include('administrador.urls')),  
     path('administrador/', include('login.urls')),  
     path('', include('loja.urls')),
-    path('home/', include('loja.urls'))
+    path('home/', include('loja.urls')),
+    path('carrinho/', include('carrinho_de_compra.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
