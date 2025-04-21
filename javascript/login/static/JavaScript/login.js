@@ -6,7 +6,7 @@ document.getElementById("signInForm").addEventListener("submit", async function(
     const password = formData.get("password");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/administrador/login/", {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN.BASE}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,3 +42,7 @@ function getCSRFToken() {
         .find(c => c.trim().startsWith('csrftoken='));
     return cookie ? cookie.split('=')[1] : null;
 }
+
+
+
+

@@ -1,5 +1,5 @@
 // URL da API para atualizar o telefone 
-const apiAtualizarTelefoneUrl = `${urlport}administrador/api/telefones/1/`; // Use o endpoint correto
+const apiAtualizarTelefoneUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.TELEFONES}1/`; // Use o endpoint correto
 
 
 // Função para exibir mensagens

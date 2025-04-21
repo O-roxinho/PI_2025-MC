@@ -1,12 +1,11 @@
 // URL da API para buscar as categorias
-const apiCategoriasUrl = `${urlport}administrador/api/categorias/`;
+const apiCategoriasUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.CATEGORIAS}`;
 
 // Captura o ID da URL
 const urlParams = new URLSearchParams(window.location.search);
 const produtoId = urlParams.get('id'); // Obtém o valor do parâmetro 'id'
 // URL da API para buscar o produto
-alert(produtoId)
-const apiUrls = `${urlport}administrador/api/produtos/${produtoId}/`;
+const apiUrls = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.PRODUTOS}${produtoId}/`;
 
 // Função para carregar as categorias
 async function carregarCategorias() {
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', carregarCategorias);
 
 if (!produtoId) {
     alert('ID do produto não encontrado na URL.');
-    window.location.href = "../administrador/produtos.html"; // Redireciona para a lista de produtos
+    window.location.href = "/"; // Redireciona para a lista de produtos
   }
 
 // Função para buscar os dados do produto
@@ -128,8 +127,7 @@ document.getElementById('enviar_cadastro_produto').addEventListener('submit', as
       }
   
       const data = await response.json();
-      alert('Produto atualizado com sucesso!');
-      window.location.href = "../administrador/cadastrar.html"; // Redireciona para a lista de produtos
+      window.location.href = "/administrador/cadastrar"; // Redireciona para a lista de produtos
     } catch (error) {
       console.error('Erro:', error);
       alert('Erro ao atualizar o produto.');

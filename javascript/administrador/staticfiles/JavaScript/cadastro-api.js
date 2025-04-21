@@ -1,4 +1,4 @@
-let apiUrl = `${urlport}administrador/api/produtos/`;
+let apiUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.PRODUTOS}`;
 
 document.getElementById('enviar_cadastro_produto').addEventListener('submit', async (event) => {
   event.preventDefault(); // Impede o envio padrão do formulário

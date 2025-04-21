@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Carrinho</title>
     <link rel="stylesheet" href="/static/CSS/loja_header.css">
+    <script src="../node/config.js"></script>
     <style>
         .cart-container {
             max-width: 1200px;
@@ -80,11 +81,8 @@
     <!-- Adicione isso no seu template base ou carrinho.html -->
     <script src="static/carrinho.js"></script>
 <script>
-    const API_BASE = 'http://127.0.0.1:8000'; // Ajuste para sua URL
-    
     document.addEventListener('DOMContentLoaded', () => {
         const authToken = localStorage.getItem('token');
-        
         
         if (!authToken) {
             window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
@@ -101,7 +99,7 @@
     
         async function loadCart() {
             try {
-                const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
                     headers: {
                         'Authorization': `Token ${authToken}`
                     }
@@ -153,7 +151,7 @@
     
         window.removeItem = async function(itemId) {
             try {
-                const response = await fetch(`${API_BASE}/api/carrinho/itens/${itemId}/`, {
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Token ${authToken}`

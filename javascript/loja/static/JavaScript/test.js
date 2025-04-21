@@ -17,7 +17,7 @@ async function addToCart(productId) {
     }
 
     try {
-        const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ async function updateCartCounter() {
     }
 
     try {
-        const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
             headers: {
                 'Authorization': `Token ${authToken}`
             }
@@ -128,3 +128,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Atualiza o contador quando a página carrega
     updateCartCounter();
 });
+
+

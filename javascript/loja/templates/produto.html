@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../static/css/produto.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Configuração da API -->
+    <script src="../../node/config.js"></script>
     <script src="/static/JavaScript/loja_pesquisa.js" defer></script>
     <style>
         /* Estilos para o botão do carrinho */
@@ -148,7 +150,7 @@ button:disabled {
     
 
     <script>
-        const API_BASE = 'http://127.0.0.1:8000';
+        
         const productId = new URLSearchParams(window.location.search).get('id');
         
         // Função auxiliar para verificar se o token é válido
@@ -163,7 +165,7 @@ button:disabled {
             if (!token) return null;
             
             try {
-                const response = await fetch(`${API_BASE}/api/usuario-atual/`, {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/usuario-atual/`, {
                     headers: {
                         'Authorization': `Token ${token}`
                     }
@@ -209,7 +211,7 @@ button:disabled {
         async function loadReviews() {
             console.log('Carregando avaliações...');
             try {
-                const response = await fetch(`${API_BASE}/api/avaliar/${productId}/`);
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/avaliar/${productId}/`);
                 if (!response.ok) {
                     throw new Error(`Erro ao carregar avaliações: ${response.status}`);
                 }
@@ -282,7 +284,7 @@ button:disabled {
             }
 
             try {
-                const response = await fetch(`${API_BASE}/api/avaliar/${productId}/`, {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/avaliar/${productId}/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -319,7 +321,7 @@ button:disabled {
         async function loadProduct() {
             console.log('Carregando produto...');
             try {
-                const response = await fetch(`${API_BASE}/api/produto/${productId}/`);
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/produto/${productId}/`);
                 if (!response.ok) throw new Error('Produto não encontrado');
                 
                 const produto = await response.json();
@@ -394,7 +396,7 @@ button:disabled {
             if (whatsappButton) {
                 whatsappButton.addEventListener('click', async () => {
                     try {
-                        const response = await fetch(`${API_BASE}/api/whatsapp/${productId}/`);
+                        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.WHATSAPP}${productId}/`);
                         const data = await response.json();
                         window.open(data.url, '_blank');
                     } catch (error) {
@@ -423,7 +425,7 @@ button:disabled {
             if (!confirm(confirmMessage)) return;
 
             try {
-                const response = await fetch(`${API_BASE}/api/comentarios/${reviewId}/`, {
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.COMENTARIOS}${reviewId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Token ${token}`
@@ -480,6 +482,7 @@ button:disabled {
         });
         
     </script>
+    
     <script src="../static/JavaScript/test.js"></script>
     <script src="../static/JavaScript/usuario.js"> </script>
 </body>

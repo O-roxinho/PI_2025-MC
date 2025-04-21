@@ -9,7 +9,7 @@ function shuffleArray(array) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const mainContainer = document.querySelector('main .row');
-
+   
     if (!mainContainer) {
         console.error('Elemento main .row não encontrado');
         return;
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         // 1. Corrigir URL da API e capturar a resposta completa
-        const categoriasResponse = await fetch('http://127.0.0.1:8000/api/main/');
+        const categoriasResponse = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.MAIN}`);
         if (!categoriasResponse.ok) throw new Error('Erro ao carregar categorias');
         
         // 2. Capturar todos os dados da resposta
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         for (const categoria of categorias) {
             // 4. Corrigir URL da API de categoria
-            const produtosResponse = await fetch(`http://127.0.0.1:8000/api/categoria/${encodeURIComponent(categoria.nome)}/`);
+            const produtosResponse = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.CATEGORIA}${encodeURIComponent(categoria.nome)}/`);
             
             if (!produtosResponse.ok) continue;
             

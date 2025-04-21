@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         searchTimeout = setTimeout(async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/buscar/?query=${encodeURIComponent(query)}`);
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.BUSCAR}?query=${encodeURIComponent(query)}`);
                 if (!response.ok) throw new Error('Erro na pesquisa');
                 
                 const data = await response.json();

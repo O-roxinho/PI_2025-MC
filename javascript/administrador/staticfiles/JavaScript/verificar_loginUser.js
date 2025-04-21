@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 async function verificarStatusUsuario() {
-
     // Se não tiver token, redireciona para a página de login
+    
     if (!token) {
         window.location.href = '/login';
         return;
@@ -12,7 +12,7 @@ async function verificarStatusUsuario() {
 
     try {
         // Verifica se o usuário é superusuário
-        const response = await fetch(`${urlport}/administrador/api/user-info/`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.USER_INFO}`, {
             headers: { 
                 'Authorization': 'Token ' + token,
                 'Content-Type': 'application/json'

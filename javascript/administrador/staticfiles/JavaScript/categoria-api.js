@@ -1,5 +1,5 @@
 // URL da API para buscar as categorias
-const apiCategoriasUrl = `${urlport}administrador/api/categorias/`;
+const apiCategoriasUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.CATEGORIAS}`;
 
 
 // Função para carregar as categorias

@@ -3,14 +3,12 @@ async function loadCart() {
     try {
         const authToken = localStorage.getItem('token');
         
-        const API_BASE = "http://127.0.0.1:8000"
-        
         if (!authToken) {
             window.location.href = '/login?next=/carrinho';
             return;
         }
 
-        const response = await fetch(`${API_BASE}/carrinho/api/carrinho/`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
             headers: {
                 'Authorization': `Token ${authToken}`
             }

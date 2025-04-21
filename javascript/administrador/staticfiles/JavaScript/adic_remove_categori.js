@@ -1,6 +1,6 @@
 // URLs da API
-const apiAdicionarCategoriaUrl = `${urlport}administrador/api/adicionar_categoria/`;
-const apiRemoverCategoriaUrl = `${urlport}administrador/api/remover_categoria/`;
+const apiAdicionarCategoriaUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.ADICIONAR_CATEGORIA}`;
+const apiRemoverCategoriaUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.REMOVER_CATEGORIA}`;
 
 
 // Função para exibir mensagens

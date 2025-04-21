@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
-        fetch("http://127.0.0.1:8000/administrador/api/register/", {
+        fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN.REGISTER}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -44,3 +44,10 @@ function getCSRFToken() {
     }
     return cookieValue;
 }
+
+
+
+
+
+
+
