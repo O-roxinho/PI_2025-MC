@@ -1,0 +1,25 @@
+############-INTRUÇOES DE COMO CLONAR-#########################
+
+cd Desktop
+git clone --branch master https://github.com/O-roxinho/PI_2025-MC.git
+
+e abra a pasta.
+
+#############-INTRUÇOES DE COMO ATUALIZAR O REPOSITORIO (ARQUIVO_ESPECIFICO)-###################
+
+--=use esse comando para ver suas alteraçoes:
+git status
+-copie o caminho de suas alteraçoes e de:
+git add (caminho_das_alteraçoes)
+de git status novamente para verificar se tudo acorreu bem.
+
+depois de esse comando:
+git commit -m "atualizando sei o que"
+git push origin master
+
+
+
+
+
+
+
