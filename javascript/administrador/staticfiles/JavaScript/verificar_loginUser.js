@@ -3,17 +3,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 async function verificarStatusUsuario() {
-    const token = localStorage.getItem('token');
-    
+
     // Se não tiver token, redireciona para a página de login
     if (!token) {
-        window.location.href = '../../javascript/login/templates/login.html';
+        window.location.href = '/login';
         return;
     }
 
     try {
         // Verifica se o usuário é superusuário
-        const response = await fetch('http://127.0.0.1:8000/administrador/api/user-info/', {
+        const response = await fetch(`${urlport}/administrador/api/user-info/`, {
             headers: { 
                 'Authorization': 'Token ' + token,
                 'Content-Type': 'application/json'
@@ -29,13 +28,13 @@ async function verificarStatusUsuario() {
 
         // Se não for superusuário, redireciona para a loja
         if (!data.is_superuser) {
-            window.location.href = '../../javascript/loja/templates/pagina.html';
+            window.location.href = '/';
         }
         
         // Se for superusuário, permanece na página atual
     } catch (error) {
         console.error('Erro ao verificar status do usuário:', error);
         // Em caso de erro, redireciona para o login
-        window.location.href = '../../javascript/login/templates/login.html';
+        window.location.href = '/login';
     }
 }
