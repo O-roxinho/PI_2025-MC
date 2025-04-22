@@ -1,9 +1,6 @@
 primeiro abaixe python caramba
 depois vai no terminal e digita "python executar.py"
-copia a url, exemplo: http://127.0.0.1:8000/
-vai em na pasta javascript/administrador/staticfiles/dev/.js e abre 
-ai só trocar a url lá
-e abrir as telas do google
+
 
 * caso não funcione o executar.py, faça esse jeito
 python -m venv venv
