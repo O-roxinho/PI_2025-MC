@@ -57,6 +57,10 @@ app.get('/produto/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'loja', 'templates', 'produto.html'));
 });
 
+app.get('/categoria/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'loja', 'templates', 'todosprodutos.html'));
+});
+
 // Rota para carregar a página do carrinho
 app.get('/carrinho/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'carrinho_de_compra', 'index.html'));

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>categoria</title>
+    
+    <link rel="stylesheet" href="../static/CSS/loja_header.css">
+    <link rel="stylesheet" href="../static/CSS/loja_pesquisa.css">
+    <script src="../../node/config.js"></script>
+    
+    
+    <style>
+        /* Estilos globais */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #333;
+}
+
+/* Container principal dos produtos */
+.produtos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Card de produto */
+.produto-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.produto-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagem do produto */
+.produto-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Nome do produto */
+#prdName {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #444;
+    font-weight: bold;
+}
+
+/* Preço do produto */
+.price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 5px 0;
+}
+
+/* Parcelamento */
+.installment {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Frete grátis */
+.free-shipping {
+    font-size: 0.85rem;
+    color: #007bff;
+    margin: 5px 0;
+}
+
+/* Mensagem de erro */
+.error-message {
+    text-align: center;
+    color: #d9534f;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu">
+            <div class="left">
+
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+                <div id="suggestions-box" class="suggestions-box">
+                </div>
+            </div>
+            
+            <div class="cart-icon">
+                <a href="/carrinho" id="cart-link">
+                    <img src="/static/imagens_icons/cart.png" alt="Carrinho">
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+
+           <div class="user-container">
+                <div class="usuName" id="usuName"></div>
+                <a href="../../login">
+                    <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
+                </a>
+            </div>
+
+        </div>
+    </header><br>
+    <h1 id="categoriaNome"></h1>
+    <div class="produtos-container" id="produtosContainer"></div>
+    <p id="mensagemErro" class="error-message" style="display: none;"></p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Extrai o nome da categoria da query string
+            const urlParams = new URLSearchParams(window.location.search);
+            let categoriaNome = urlParams.get('categoria');
+            
+            // Caso o parâmetro não esteja nomeado (formato ?valor)
+            if (!categoriaNome) {
+                categoriaNome = decodeURIComponent(window.location.search.substring(1));
+            }
+
+            if (!categoriaNome) {
+                exibirErro('Categoria não especificada na URL');
+                return;
+            }
+
+            document.getElementById('categoriaNome').textContent = categoriaNome;
+            await carregarProdutos(categoriaNome);
+        });
+
+        // Função para carregar produtos (atualizada)
+        async function carregarProdutos(categoriaNome) {
+            try {
+                // Codifica o nome para URL e remove espaços extras
+                const categoriaCodificada = encodeURIComponent(categoriaNome.trim());
+                
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.CATEGORIA}${categoriaCodificada}/`);
+                
+                if (response.status === 404) {
+                    throw new Error('Categoria não encontrada');
+                }
+
+                const produtos = await response.json();
+                exibirProdutos(produtos);
+
+            } catch (error) {
+                exibirErro(error.message || 'Erro ao carregar produtos');
+            }
+        }
+
+        // Exibe os produtos na tela
+        function exibirProdutos(produtos) {
+            const container = document.getElementById('produtosContainer');
+            container.innerHTML = '';
+
+            if (produtos.length === 0) {
+                exibirErro('Não há produtos nesta categoria');
+                return;
+            }
+
+            produtos.forEach(produto => {
+                const card = `
+                    <div class="produto-card">
+                        <a href="/produto/${produto.id}">
+                            <img src="${produto.imagem_url}" width="200" class="img-fluid" alt="${produto.nome}">
+                        </a>
+                        <h2 id="prdName">${produto.nome}</h2>
+                        <p class="price">R$ ${(parseFloat(produto.preco)).toFixed(2)}</p>
+                        <p class="installment">2x R$${((parseFloat(produto.preco)).toFixed(2))/2} sem juros</p>
+                        <p class="free-shipping">*Frete grátis</p>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+  
+        // Exibe mensagens de erro
+        function exibirErro(mensagem) {
+            const erroElement = document.getElementById('mensagemErro');
+            erroElement.textContent = mensagem;
+            erroElement.style.display = 'block';
+        }
+    </script>
+    <script src="../static/JavaScript/contador_carrinho.js"></script>
+    <script src="../static/JavaScript/usuario.js"></script>
+    
+    <script src="../static/JavaScript/loja_pesquisa.js"></script>
+    
+
+</body>
+</html>

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <h1 class="text-left">${categoria.nome}</h1>
 
                         ${produtos.length > 5 ? `
-                            <a href="/administrador/categoria/${categoria.nome}" id="btn_ver">
+                            <a href="/categoria/?${categoria.nome}" id="btn_ver">
                                 Ver Mais
                             </a>
                         ` : ''}

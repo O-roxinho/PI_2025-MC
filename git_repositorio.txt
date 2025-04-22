@@ -17,7 +17,10 @@ depois de esse comando:
 git commit -m "atualizando sei o que"
 git push origin master
 
-
+=============================================
+Comando para adicionar apenas os modificados:
+git add -u
+=============================================
 
 
 
