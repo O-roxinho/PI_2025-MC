@@ -1,0 +1,62 @@
+function showNotification(mensagem) {
+    // Cria e injeta o estilo se ainda não foi criado
+    if (!document.getElementById('notificacao-estilo')) {
+        const style = document.createElement('style');
+        style.id = 'notificacao-estilo';
+        style.textContent = `
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+            .cart-notification {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 15px 25px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                background-color: #fff;
+                border-radius: 8px;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 9999;
+                animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+                font-family: Arial, sans-serif;
+            }
+
+            .cart-notification i {
+                font-size: 1.5em;
+                color: green;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Cria o elemento da notificação
+    const notification = document.createElement('div');
+    notification.className = 'cart-notification';
+    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${mensagem}!`;
+
+    // Adiciona ao corpo
+    document.body.appendChild(notification);
+
+    // Reset da animação
+    notification.style.animation = 'none';
+    void notification.offsetWidth;
+    notification.style.animation = 'slideIn 0.5s, fadeOut 0.5s 2.5s';
+
+    // Remove depois de 3 segundos
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+
+// Exemplo de uso
+showNotification('Produto adicionado com sucesso');

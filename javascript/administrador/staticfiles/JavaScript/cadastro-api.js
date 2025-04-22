@@ -37,8 +37,16 @@ document.getElementById('enviar_cadastro_produto').addEventListener('submit', as
 
     // Exibe uma mensagem de sucesso
     document.getElementById('message success-produto').textContent = 'Produto cadastrado com sucesso!';
+    
   } catch (error) {
     console.error('Erro:', error);
     document.getElementById('message success-produto').textContent = 'Erro ao cadastrar o produto.';
   }
+
+
+
+  
 });
+
+
+

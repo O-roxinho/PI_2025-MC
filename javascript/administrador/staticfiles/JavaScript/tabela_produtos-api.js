@@ -31,7 +31,10 @@ async function GETProdutos() {
     const tbody = document.getElementById('lista-produtos');
     tbody.innerHTML = ''; // Limpa o conteúdo atual
       produtos =  await GETProdutos()
+      console.log(produtos.length)
+      let s = 0
       produtos.forEach(produto => {
+
               const row = document.createElement('tr');
 
               // Coluna Nome
@@ -65,7 +68,6 @@ async function GETProdutos() {
               // Coluna Categoria
               const categoria = document.createElement('td');
               categoria.textContent = produto.categoria;
-              console.log(produto.categoria)
               row.appendChild(categoria);
 
               // Coluna Estoque
@@ -94,9 +96,6 @@ async function GETProdutos() {
               // Adiciona a linha à tabela
               tbody.appendChild(row);
               });
-            
-                
-      
   }
 
   // Função para excluir um produto

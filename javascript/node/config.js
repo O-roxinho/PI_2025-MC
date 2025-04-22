@@ -30,7 +30,8 @@ const API_CONFIG = {
         
         // Carrinho
         CARRINHO: {
-            BASE: '/carrinho/api/carrinho/'
+            BASE: '/carrinho/api/carrinho/',
+            ITEMS:  '/carrinho/api/carrinho/itens/'
         },
 
         // Login

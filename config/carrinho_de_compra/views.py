@@ -39,6 +39,7 @@ class CarrinhoView(APIView):
 
 class ItemCarrinhoView(APIView):
     permission_classes = [IsAuthenticated]
+    
 
     def delete(self, request, item_id):
         item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario=request.user)
