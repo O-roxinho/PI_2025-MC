@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'login',
     'loja',
     'carrinho_de_compra',
+    'favoritos',
 ]
 
 INSTALLED_APPS += ['corsheaders',

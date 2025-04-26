@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Favoritos</title>
+    <link rel="stylesheet" href="../static/CSS/loja_header.css">
+    <link rel="stylesheet" href="../static/CSS/favoritos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="../../node/config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="menu">
+            <div class="left">
+                <a href="/" class="logo">LOJA</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+                <div id="suggestions-box" class="suggestions-box"></div>
+            </div>
+            <div class="cart-icon">
+                <a href="/carrinho" id="cart-link">
+                    <img src="/static/imagens_icons/cart.png" alt="Carrinho">
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="user-container">
+                <div class="usuName" id="usuName"></div>
+                <a href="/login">
+                    <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Meus Favoritos</h1>
+        <div id="favoritos-container" class="favoritos-grid">
+            <!-- Os favoritos serão carregados aqui via JavaScript -->
+        </div>
+    </main>
+
+    <script src="../static/JavaScript/contador_carrinho.js"></script>
+    <script src="../static/JavaScript/usuario.js"></script>
+    <script src="../static/JavaScript/favoritos.js"></script>
+</body>
+</html> 

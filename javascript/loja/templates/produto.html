@@ -12,6 +12,7 @@
     <!-- Configuração da API -->
     <script src="../../node/config.js"></script>
     <script src="/static/JavaScript/loja_pesquisa.js" defer></script>
+    
     <style>
         /* Estilos para o botão do carrinho */
 .cart-button {
@@ -82,6 +83,28 @@ button:disabled {
 .cart-notification i {
     font-size: 1.5em;
 }
+
+.favorite-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.favorite-button:hover {
+    transform: scale(1.1);
+}
+
+.favorite-button.active {
+    color: #ff4444;
+}
+
+.favorite-button i {
+    transition: all 0.3s ease;
+}
     </style>
 </head>
 <body>
@@ -102,6 +125,16 @@ button:disabled {
                     <span id="cart-count">0</span>
                 </a>
             </div>
+
+            <!-- Ícone de favoritos com contador -->
+<div class="favorite-icon-container">
+    <a href="/favoritos" id="favorite-link">
+        <i class="fas fa-heart"></i>
+        <span id="favorite-count">0</span>
+    </a>
+</div>
+
+
 
            <div class="user-container">
                 <div class="usuName" id="usuName"></div>
@@ -128,6 +161,9 @@ button:disabled {
             <button id="add-to-cart" class="cart-button">
                 <img src="/static/imagens_icons/cart-add.png" alt="Adicionar ao Carrinho">
                 ADICIONAR AO CARRINHO
+            </button>
+            <button id="favorite-button" class="favorite-button">
+                <i class="far fa-heart"></i>
             </button>
             <div id="cart-notification" class="cart-notification" style="display: none;">
                 <i class="fas fa-check-circle"></i> Produto adicionado ao carrinho!
@@ -469,6 +505,91 @@ button:disabled {
             });
         }
 
+        // Função para verificar se o produto está nos favoritos
+        async function checkFavoriteStatus() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/verificar/?produto_id=${productId}`, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Erro ao verificar favorito');
+
+                const data = await response.json();
+                updateFavoriteButton(data.favorito);
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        // Função para atualizar o botão de favoritos
+        function updateFavoriteButton(isFavorite) {
+            const button = document.getElementById('favorite-button');
+            const icon = button.querySelector('i');
+            
+            if (isFavorite) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                button.classList.add('active');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                button.classList.remove('active');
+            }
+        }
+
+        // Função para adicionar/remover dos favoritos
+        async function toggleFavorite() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname + window.location.search);
+                return;
+            }
+
+            const button = document.getElementById('favorite-button');
+            const isFavorite = button.classList.contains('active');
+
+            try {
+                if (isFavorite) {
+                    // Remover dos favoritos
+                    const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/remover_por_produto/?produto_id=${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Token ${token}`
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Erro ao remover dos favoritos');
+                } else {
+                    // Adicionar aos favoritos
+                    const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Token ${token}`
+                        },
+                        body: JSON.stringify({
+                            produto_id: productId
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('Erro ao adicionar aos favoritos');
+                }
+                updateFavoriteCount()
+                updateFavoriteButton(!isFavorite);
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar favoritos');
+            }
+        }
+
+        // Adicionar evento de clique ao botão de favoritos
+        document.getElementById('favorite-button').addEventListener('click', toggleFavorite);
+
         // Inicialização quando a página carrega
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Página carregada. ID do produto:', productId);
@@ -486,9 +607,11 @@ button:disabled {
             
             // Carrega os dados do produto
             loadProduct();
+            checkFavoriteStatus();
         });
         
     </script>
+    <script src="../static/JavaScript/contador_favoritos.js"></script>
     <script src="../static/JavaScript/contador_carrinho.js"></script>
     <script src="../static/JavaScript/test.js"></script>
     <script src="../static/JavaScript/usuario.js"> </script>

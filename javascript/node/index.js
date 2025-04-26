@@ -66,8 +66,13 @@ app.get('/carrinho/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'carrinho_de_compra', 'index.html'));
 });
 
+// Rota para carregar a página de favoritos
+app.get('/favoritos/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'favoritos', 'templates', 'favoritos.html'));
+});
+
 // Servir arquivos estáticos do carrinho
-app.use('/carrinho.js', express.static(path.join(__dirname, '..', 'carrinho_de_compra', 'static')));
+app.use('/static', express.static(path.join(__dirname, '..', 'favoritos', 'static')));
 
 // Iniciar o servidor
 app.listen(API_CONFIG.NODE_PORT, () => {
