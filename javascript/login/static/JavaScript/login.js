@@ -5,6 +5,8 @@ document.getElementById("signInForm").addEventListener("submit", async function(
     const email = formData.get("email");
     const password = formData.get("password");
 
+    const CaminhDeVolta = new URLSearchParams(window.location.search).get('next');
+    
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN.BASE}`, {
             method: "POST",
@@ -22,7 +24,11 @@ document.getElementById("signInForm").addEventListener("submit", async function(
             localStorage.setItem("username", data.user.username)    
             if (data.user.is_superuser) {
                 window.location.href = "../../administrador/cadastrar";
-            } else {
+            }
+            else if (CaminhDeVolta) {
+                window.location.href = CaminhDeVolta;
+            }
+            else {
                 window.location.href = "/";
             }
         } else {

@@ -22,7 +22,7 @@ app.use('/static', express.static(path.join(__dirname, '..', 'loja', 'static')))
 
 // Rota para carregar a página principal do primeiro site (pagina.html)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'loja', 'templates', 'pagina.html'));
+    res.sendFile(path.join(__dirname, '..', 'loja', 'templates', 'index.html'));
 });
 
 // Rota para carregar a página de login

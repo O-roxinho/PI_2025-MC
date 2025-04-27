@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Configuração da API -->
     <script src="../../node/config.js"></script>
-    <script src="/static/JavaScript/loja_pesquisa.js" defer></script>
+    
     
     <style>
         /* Estilos para o botão do carrinho */
@@ -127,14 +127,12 @@ button:disabled {
             </div>
 
             <!-- Ícone de favoritos com contador -->
-<div class="favorite-icon-container">
-    <a href="/favoritos" id="favorite-link">
-        <i class="fas fa-heart"></i>
-        <span id="favorite-count">0</span>
-    </a>
-</div>
-
-
+            <div class="favorite-icon-container">
+                <a href="/favoritos" id="favorite-link">
+                    <i class="fas fa-heart"></i>
+                    <span id="favorite-count">0</span>
+                </a>
+            </div>
 
            <div class="user-container">
                 <div class="usuName" id="usuName"></div>
@@ -168,7 +166,7 @@ button:disabled {
             <div id="cart-notification" class="cart-notification" style="display: none;">
                 <i class="fas fa-check-circle"></i> Produto adicionado ao carrinho!
             </div>
-            <!-- Mantenha os outros botões que você já tem -->
+            
         </div>
 
         <section class="reviews">
@@ -186,435 +184,19 @@ button:disabled {
             
             <div id="auth-message">
                 <p>Faça login para deixar uma avaliação</p>
-                <a href="/login">Login</a>
+                <a id="login-link" href="#">Login</a>
             </div>
         </section>
     </div>
-    
 
-    <script>
-        
-        const productId = new URLSearchParams(window.location.search).get('id');
-        
-        // Função auxiliar para verificar se o token é válido
-        function isValidToken(token) {
-            if (!token) return false;
-            return true; // Se existe um token, consideramos válido inicialmente
-        }
-
-        // Função para obter o ID do usuário do token
-        async function getUserIdFromToken() {
-            const token = localStorage.getItem('token');
-            if (!token) return null;
-            
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/usuario-atual/`, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    return {
-                        id: data.id,
-                        is_staff: data.is_staff
-                    };
-                }
-                return null;
-            } catch (error) {
-                console.error('Erro ao obter ID do usuário:', error);
-                return null;
-            }
-        }
-
-        // Função checkAuth atualizada
-        function checkAuth() {
-            const token = localStorage.getItem('token');
-            const reviewForm = document.getElementById('review-form');
-            const authMessage = document.getElementById('auth-message');
-
-            if (token && isValidToken(token)) {
-                if (reviewForm) reviewForm.style.display = 'block';
-                if (authMessage) authMessage.style.display = 'none';
-                setupRatingStars();
-            } else {
-                if (token) localStorage.removeItem('token');
-                if (reviewForm) reviewForm.style.display = 'none';
-                if (authMessage) authMessage.style.display = 'block';
-            }
-        }
-
-        // Função canDeleteReview atualizada
-        function canDeleteReview(review) {
-            const userId = getUserIdFromToken();
-            return userId && review.usuario_id === userId;
-        }
-
-        // Função loadReviews atualizada
-        async function loadReviews() {
-            console.log('Carregando avaliações...');
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/avaliar/${productId}/`);
-                if (!response.ok) {
-                    throw new Error(`Erro ao carregar avaliações: ${response.status}`);
-                }
-                
-                const reviews = await response.json();
-                console.log('Avaliações carregadas:', reviews);
-                await displayReviews(reviews);
-            } catch (error) {
-                console.error('Erro ao carregar avaliações:', error);
-            }
-        }
-
-        async function displayReviews(reviews) {
-            const container = document.getElementById('reviews-list');
-            const token = localStorage.getItem('token');
-            const userData = token ? await getUserIdFromToken() : null;
-            
-            console.log('Token:', token);
-            console.log('Dados do usuário:', userData);
-            console.log('Reviews:', reviews);
-            
-            container.innerHTML = reviews.map(review => {
-                const canDelete = token && (review.usuario_id === userData?.id || userData?.is_staff);
-                console.log(`Review ${review.id}:`, {
-                    usuario_id: review.usuario_id,
-                    user_data_id: userData?.id,
-                    is_staff: userData?.is_staff,
-                    can_delete: canDelete
-                });
-                
-                return `
-                    <div class="review" id="review-${review.id}">
-                        <div class="infosAvaliacao">
-                            <div class="comentario-container">
-                                <p id="nomeAv">
-                                    <strong>${review.usuario}</strong>
-                                    <span id="starsAv">${'★'.repeat(review.nota)}</span>
-                                    <span id="dataAv">${new Date(review.data_avaliacao).toLocaleDateString()}</span>
-                                </p>
-                                <p id="comentAv">"${review.comentario}"</p>
-                            </div>
-                            ${canDelete ? 
-                                `<button class="excluir-comentario" data-id="${review.id}" aria-label="Excluir comentário">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    <span class="tooltip">Excluir...</span>
-                                </button>` : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('reviews-count').textContent = reviews.length;
-            setupDeleteButtons();
-        }
-
-        // Função submitReview atualizada
-        async function submitReview() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('Você precisa estar logado para avaliar');
-                return;
-            }
-
-            const reviewText = document.getElementById('review-text').value;
-            const rating = document.querySelectorAll('.star.selected').length;
-
-            if (rating === 0) {
-                alert('Por favor, selecione uma classificação');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/avaliar/${productId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${token}`
-                    },
-                    body: JSON.stringify({
-                        nota: rating,
-                        comentario: reviewText
-                    })
-                });
-
-                if (response.ok) {
-                    loadReviews();
-                    document.getElementById('review-text').value = '';
-                    document.querySelectorAll('.star').forEach(star => {
-                        star.classList.remove('selected');
-                        star.textContent = '☆';
-                    });
-                    alert('Avaliação enviada com sucesso!');
-                } else if (response.status === 401) {
-                    alert('Sua sessão expirou. Por favor, faça login novamente.');
-                    localStorage.removeItem('token');
-                    window.location.href = '/login';
-                } else {
-                    throw new Error('Erro ao enviar avaliação');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                alert('Erro ao enviar avaliação. Tente novamente.');
-            }
-        }
-
-        // Função para carregar dados do produto
-        async function loadProduct() {
-            console.log('Carregando produto...');
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/produto/${productId}/`);
-                if (!response.ok) throw new Error('Produto não encontrado');
-                
-                const produto = await response.json();
-                console.log('Produto carregado:', produto);
-                displayProduct(produto);
-                setupWhatsApp(); // Configura o botão do WhatsApp
-                checkAuth(); // Verifica autenticação
-                await loadReviews(); // Carrega as avaliações
-            } catch (error) {
-                console.error('Erro ao carregar o produto:', error);
-                alert('Erro ao carregar o produto');
-            }
-        }
-
-        // Função para exibir dados do produto
-        function displayProduct(produto) {
-            document.getElementById('product-name').textContent = produto.nome;
-            document.getElementById('product-price').textContent = `R$ ${parseFloat(produto.preco).toFixed(2)}`;
-            
-            document.getElementById('product-description').textContent = produto.descricao;
-            
-            const ratingContainer = document.getElementById('product-rating');
-            ratingContainer.innerHTML = '★'.repeat(Math.round(produto.nota_media)) + 
-                                      '☆'.repeat(5 - Math.round(produto.nota_media));
-            
-            const imgContainer = document.getElementById('product-image');
-            if (produto.imagem_url) {
-                imgContainer.innerHTML = `<img src="${produto.imagem_url}" alt="${produto.nome}">`;
-            }
-        }
-
-        // Configuração do sistema de estrelas
-        function setupRatingStars() {
-            const container = document.getElementById('star-rating');
-            if (!container) return;
-
-            container.innerHTML = Array(5).fill().map((_, i) => 
-                `<span class="star" data-rating="${i + 1}">☆</span>`
-            ).join('');
-            
-            const stars = container.querySelectorAll('.star');
-            
-            stars.forEach((star, index) => {
-                star.addEventListener('mouseover', () => {
-                    for (let i = 0; i <= index; i++) {
-                        stars[i].textContent = '★';
-                    }
-                    for (let i = index + 1; i < stars.length; i++) {
-                        stars[i].textContent = '☆';
-                    }
-                });
-
-                star.addEventListener('mouseout', () => {
-                    stars.forEach((s, i) => {
-                        s.textContent = s.classList.contains('selected') ? '★' : '☆';
-                    });
-                });
-
-                star.addEventListener('click', () => {
-                    stars.forEach(s => s.classList.remove('selected'));
-                    for (let i = 0; i <= index; i++) {
-                        stars[i].classList.add('selected');
-                        stars[i].textContent = '★';
-                    }
-                });
-            });
-        }
-
-        // Configurar WhatsApp
-        async function setupWhatsApp() {
-            const whatsappButton = document.getElementById('whatsapp-button');
-            if (whatsappButton) {
-                whatsappButton.addEventListener('click', async () => {
-                    try {
-                        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.WHATSAPP}${productId}/`);
-                        const data = await response.json();
-                        window.open(data.url, '_blank');
-                    } catch (error) {
-                        console.error('Erro:', error);
-                        alert('Erro ao abrir WhatsApp');
-                    }
-                });
-            }
-        }
-
-        // Função para deletar avaliação atualizada
-        async function deleteReview(reviewId) {
-            const token = localStorage.getItem('token');
-            const userData = await getUserIdFromToken();
-            
-            if (!token || !userData) {
-                alert('Você precisa estar logado para excluir uma avaliação');
-                return;
-            }
-
-            const isAdmin = userData.is_staff;
-            const confirmMessage = isAdmin ? 
-                'Tem certeza que deseja excluir esta avaliação como administrador?' : 
-                'Tem certeza que deseja excluir sua avaliação?';
-
-            if (!confirm(confirmMessage)) return;
-
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOJA.COMENTARIOS}${reviewId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-
-                if (response.ok) {
-                    document.getElementById(`review-${reviewId}`).remove();
-                    const reviewsCount = document.getElementById('reviews-count');
-                    reviewsCount.textContent = parseInt(reviewsCount.textContent) - 1;
-                    alert('Avaliação excluída com sucesso!');
-                } else if (response.status === 401) {
-                    alert('Sua sessão expirou. Por favor, faça login novamente.');
-                    localStorage.removeItem('token');
-                    window.location.href = '/login';
-                } else if (response.status === 403) {
-                    alert('Você não tem permissão para excluir esta avaliação.');
-                } else {
-                    throw new Error('Erro ao excluir avaliação');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                alert('Erro ao excluir avaliação. Tente novamente.');
-            }
-        }
-
-        // Função setupDeleteButtons atualizada
-        function setupDeleteButtons() {
-            document.querySelectorAll('.excluir-comentario').forEach(button => {
-                button.addEventListener('click', () => {
-                    const reviewId = button.getAttribute('data-id');
-                    deleteReview(reviewId);
-                });
-            });
-        }
-
-        // Função para verificar se o produto está nos favoritos
-        async function checkFavoriteStatus() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/verificar/?produto_id=${productId}`, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-
-                if (!response.ok) throw new Error('Erro ao verificar favorito');
-
-                const data = await response.json();
-                updateFavoriteButton(data.favorito);
-            } catch (error) {
-                console.error('Erro:', error);
-            }
-        }
-
-        // Função para atualizar o botão de favoritos
-        function updateFavoriteButton(isFavorite) {
-            const button = document.getElementById('favorite-button');
-            const icon = button.querySelector('i');
-            
-            if (isFavorite) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                button.classList.add('active');
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                button.classList.remove('active');
-            }
-        }
-
-        // Função para adicionar/remover dos favoritos
-        async function toggleFavorite() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname + window.location.search);
-                return;
-            }
-
-            const button = document.getElementById('favorite-button');
-            const isFavorite = button.classList.contains('active');
-
-            try {
-                if (isFavorite) {
-                    // Remover dos favoritos
-                    const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/remover_por_produto/?produto_id=${productId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `Token ${token}`
-                        }
-                    });
-
-                    if (!response.ok) throw new Error('Erro ao remover dos favoritos');
-                } else {
-                    // Adicionar aos favoritos
-                    const response = await fetch(`${API_CONFIG.BASE_URL}/api/favoritos/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Token ${token}`
-                        },
-                        body: JSON.stringify({
-                            produto_id: productId
-                        })
-                    });
-
-                    if (!response.ok) throw new Error('Erro ao adicionar aos favoritos');
-                }
-                updateFavoriteCount()
-                updateFavoriteButton(!isFavorite);
-            } catch (error) {
-                console.error('Erro:', error);
-                alert('Erro ao atualizar favoritos');
-            }
-        }
-
-        // Adicionar evento de clique ao botão de favoritos
-        document.getElementById('favorite-button').addEventListener('click', toggleFavorite);
-
-        // Inicialização quando a página carrega
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Página carregada. ID do produto:', productId);
-            if (!productId) {
-                console.error('ID do produto não encontrado na URL');
-                alert('Produto não encontrado');
-                return;
-            }
-            
-            // Configura o botão de enviar avaliação
-            const submitButton = document.getElementById('submit-review');
-            if (submitButton) {
-                submitButton.addEventListener('click', submitReview);
-            }
-            
-            // Carrega os dados do produto
-            loadProduct();
-            checkFavoriteStatus();
-        });
-        
-    </script>
-    <script src="../static/JavaScript/contador_favoritos.js"></script>
-    <script src="../static/JavaScript/contador_carrinho.js"></script>
-    <script src="../static/JavaScript/test.js"></script>
-    <script src="../static/JavaScript/usuario.js"> </script>
+    <script src="../static/JavaScript/headers/loja_pesquisa.js" defer></script>
+    <script src="../static/JavaScript/headers/usuario.js"> </script>
+    <script src="../static/JavaScript/headers/contador_favoritos.js"></script>
+    <script src="../static/JavaScript/headers/contador_carrinho.js"></script>
+    <script src="../static/JavaScript/tela_produto/carinho.js"></script>
+    <script src="../static/JavaScript/tela_produto/produto.js"></script>
+    <script src="../static/JavaScript/tela_produto/comentario.js"></script>
+    <script src="../static/JavaScript/tela_produto/avaliação.js"></script>
 </body>
 </html>
 

@@ -7,27 +7,7 @@
   <script src="JavaScript/login_index.js" defer></script>
   <script src="../../node/config.js"></script>
   <title>Login</title>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Remove o token do localStorage ao carregar a página
-    localStorage.removeItem("token");
-    localStorage.removeItem("username")
-
-    // Faz logout no servidor
-    fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGIN.LOGOUT}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            
-        }
-    })
-    .then(response => response.json())
-    .then(data => console.log("Logout:", data.mensagem))
-    .catch(error => console.error("Erro ao deslogar:", error));
-});
-
-
-  </script>
+  <script src="../static/JavaScript/Logout.js"></script>
 </head>
 <body>
   <div class="container" id="container">

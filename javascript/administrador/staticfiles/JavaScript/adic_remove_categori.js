@@ -8,7 +8,6 @@ function exibirMensagem(mensagem, tipo) {
   const messageDiv = document.getElementById('message_categoria');
   messageDiv.textContent = mensagem;
   messageDiv.className = `message ${tipo}`;
-  
 }
 
 // Função para adicionar categoria

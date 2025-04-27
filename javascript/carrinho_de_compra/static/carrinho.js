@@ -1,4 +1,4 @@
-// No seu arquivo JavaScript (carrinho.js ou similar)
+// carrinho.js
 async function loadCart() {
     try {
         const authToken = localStorage.getItem('token');

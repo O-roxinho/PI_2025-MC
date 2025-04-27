@@ -54,12 +54,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # Autenticação por token
     ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',  # exige login
-    # ],
-     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
+    #  'DEFAULT_PERMISSION_CLASSES': [
+    #      'rest_framework.permissions.IsAuthenticated',  # exige login
+    #  ],
+      'DEFAULT_PERMISSION_CLASSES': (
+         'rest_framework.permissions.AllowAny',
+     ),
 }
 
 CORS_ALLOW_ALL_ORIGINS = True  # Permite qualquer origem (uso temporário)
