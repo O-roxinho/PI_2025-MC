@@ -31,6 +31,7 @@ const API_CONFIG = {
         // Carrinho
         CARRINHO: {
             BASE: '/carrinho/api/carrinho/',
+            REDUZIR_QUANTIDADE: '/carrinho/api/Reduzir_quantidade/',
             ITEMS:  '/carrinho/api/carrinho/itens/'
         },
 

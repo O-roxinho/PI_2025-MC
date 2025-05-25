@@ -66,6 +66,9 @@ app.get('/carrinho/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'carrinho_de_compra', 'index.html'));
 });
 
+app.use('/static', express.static(path.join(__dirname, '..', 'carrinho_de_compra', 'static')));
+
+
 // Rota para carregar a página de favoritos
 app.get('/favoritos/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'favoritos', 'templates', 'favoritos.html'));

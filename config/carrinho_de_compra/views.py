@@ -37,6 +37,32 @@ class CarrinhoView(APIView):
         serializer = CarrinhoSerializer(carrinho, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+class Reduzir_quantidade(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, request):
+        produto_id = request.data.get('produto_id')
+        if not produto_id:
+            return Response({'error': 'produto_id é obrigatório'}, status=status.HTTP_400_BAD_REQUEST)
+
+        produto = get_object_or_404(Produtos, id=produto_id)
+        carrinho, created = Carrinho.objects.get_or_create(usuario=request.user)
+        
+        item, created = ItemCarrinho.objects.get_or_create(
+            carrinho=carrinho,
+            produto=produto,
+            defaults={'quantidade': 1}
+        )
+
+        if not created:
+            item.quantidade -= 1
+            item.save()
+
+        serializer = CarrinhoSerializer(carrinho, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 class ItemCarrinhoView(APIView):
     permission_classes = [IsAuthenticated]
     

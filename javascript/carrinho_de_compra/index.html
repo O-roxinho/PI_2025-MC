@@ -1,181 +1,79 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Carrinho</title>
-    <link rel="stylesheet" href="/static/CSS/loja_header.css">
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mundo das Coisas - Seu Carrinho</title>
+    <link rel="stylesheet" href="static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <script src="../node/config.js"></script>
-    <style>
-        .cart-container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .cart-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .cart-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-right: 20px;
-        }
-        
-        .cart-item-info {
-            flex-grow: 1;
-        }
-        
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-        }
-        
-        .cart-total {
-            text-align: right;
-            font-size: 1.2em;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        
-        .checkout-btn {
-            display: block;
-            width: 100%;
-            max-width: 300px;
-            margin: 30px auto 0;
-            padding: 15px;
-            background: #28a745;
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <!-- Mesmo header da página de produtos -->
+      <div class="container">
+        <div class="logo">
+          <h1>Mundo das <span>Coisas</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Meu Carrinho</a></li>
+            <li><a href="#">Histórico</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button id="theme-toggle" class="theme-toggle">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <div class="cart-container">
-        <h1>Meu Carrinho</h1>
-        <div id="cart-items">
-            <!-- Itens serão carregados via JavaScript -->
+    <main class="container">
+      <section class="cart-container">
+        <div class="cart-header">
+          <h2>Meu Carrinho de Compras</h2>
+          <p>Gerencie os itens do seu carrinho</p>
         </div>
-        <div class="cart-total">
-            Total: <span id="cart-total">R$ 0,00</span>
-        </div>
-        <button class="checkout-btn">Finalizar Compra</button>
-    </div>
-    <!-- Adicione isso no seu template base ou carrinho.html -->
-    <script src="static/carrinho.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const authToken = localStorage.getItem('token');
-        
-        if (!authToken) {
-            window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
-            return;
-        }
-    
-        // Elementos da interface
-        const cartItems = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-        const checkoutBtn = document.getElementById('checkout-btn');
-    
-        // Carrega o carrinho
-        loadCart();
-    
-        async function loadCart() {
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.BASE}`, {
-                    headers: {
-                        'Authorization': `Token ${authToken}`
-                    }
-                });
-                
-                if (response.status === 401) {
-                    throw new Error('Não autorizado');
-                }
-                
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar carrinho');
-                }
-                
-                const cart = await response.json();
-                console.log(cart)
-                renderCart(cart);
-            } catch (error) {
-                console.error('Erro:', error);
-                if (error.message.includes('Não autorizado')) {
-                    localStorage.removeItem('authToken');
-                    window.location.href = '/login?next=' + encodeURIComponent(window.location.pathname);
-                } else {
-                    cartItems.innerHTML = `<p class="error">${error.message}</p>`;
-                }
-            }
-        }
-    
-        function renderCart(cart) {
-            if (cart.itens.length === 0) {
-                cartItems.innerHTML = '<p>Seu carrinho está vazio</p>';
-                cartTotal.textContent = 'R$ 0,00';
-                return;
-            }
-            
-            cartItems.innerHTML = cart.itens.map(item => `
-                <div class="cart-item">
-                    <img src="${item.produto.imagem_url}" alt="${item.produto.nome}">
-                    <div class="item-details">
-                        <h3>${item.produto.nome}</h3>
-                        <p>Preço: R$ ${parseFloat(item.produto.preco).toFixed(2)}</p>
-                        <p>Quantidade: ${item.quantidade}</p>
-                        <button onclick="removeItem(${item.id})">Remover</button>
-                    </div>
-                </div>
-            `).join('');
-            
-            cartTotal.textContent = `R$ ${cart.total.toFixed(2)}`;
-        }
-    
-        window.removeItem = async function(itemId) {
-            try {
-                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.ITEMS}${itemId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Token ${authToken}`
-                    }
-                });
-                
-                if (response.ok) {
-                    loadCart();
-                } else {
-                    throw new Error('Falha ao remover item');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                alert(error.message);
-            }
-        };
-    
-        checkoutBtn.addEventListener('click', () => {
-            alert('Redirecionando para checkout...');
-            // Implemente a lógica de checkout aqui
-        });
-    });
-    </script>
 
-    
-</body>
+        <div class="cart-items">
+          <div class="empty-cart-message">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Seu carrinho está vazio</p>
+            <a href="#" class="continue-shopping">Continuar comprando</a>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="cart-total">
+            <p>Subtotal: <span class="total-price">R$ 0,00</span></p>
+            <p>Frete: <span class="shipping">A calcular</span></p>
+            <p class="total">Total: <span class="final-price">R$ 0,00</span></p>
+          </div>
+          <button class="checkout-btn">Finalizar Compra</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Mundo das Coisas. Todos os direitos reservados.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="static/script.js"></script>
+  </body>
 </html>
