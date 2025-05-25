@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 const cart = await response.json();
-                console.log(cart)
+                
                 
                 renderCart(cart)
             } catch (error) {
@@ -95,8 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
         finalPriceElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
     }
 
-    // Event listeners para os botões (exemplo básico)
-document.addEventListener('click', function(e) {
     //função para REDUZIR A QUANTIDADE
 window.removeToCart = async function (productId) {
 
@@ -117,7 +115,7 @@ window.removeToCart = async function (productId) {
         return;
     }
    
-    console.log(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.REDUZIR_QUANTIDADE}`)
+    
     try {
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CARRINHO.REDUZIR_QUANTIDADE}`, {
             method: 'POST',
@@ -216,10 +214,7 @@ window.addToCart = async function (productId) {
             }
         };
     
-        checkoutBtn.addEventListener('click', () => {
-            alert('Redirecionando para checkout...');
-            // Implemente a lógica de checkout aqui
-        });
+       
         
     });
 
@@ -237,4 +232,3 @@ window.addToCart = async function (productId) {
         }
     });
 
-});
