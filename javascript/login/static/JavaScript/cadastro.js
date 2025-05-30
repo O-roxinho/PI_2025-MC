@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.token) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("username", data.user.username)
-                alert("Cadastro realizado com sucesso!");
+                //alert("Cadastro realizado com sucesso!");
                 window.location.href = "/"; // Redireciona para a loja
             } else {
-                alert(data.mensagem);
+                document.getElementById("minhaDiv").innerText = data.mensagem
+                //alert(data.mensagem);
             }
         })
         .catch(error => console.error("Erro ao cadastrar:", error));
