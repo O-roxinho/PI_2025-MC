@@ -111,36 +111,49 @@ button:disabled {
     <header>
         <div class="menu">
             <div class="left">
-
+                <a href="/" class="logo">
+                    <img src="../static/imagens_icons/WhatsApp Image 2025-05-30 at 19.58.59.png" alt="Mundo das Coisas">
+                </a>
             </div>
+            
             <div class="search-bar">
                 <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
                 <div id="suggestions-box" class="suggestions-box">
                 </div>
             </div>
 
-            <div class="cart-icon">
-                <a href="/carrinho" id="cart-link">
-                    <img src="/static/imagens_icons/cart.png" alt="Carrinho">
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
+            <div class="right-icons">
+                <div class="theme-switch" id="theme-switch">
+                    <i class="fas fa-moon"></i>
+                </div>
 
-            <!-- Ícone de favoritos com contador -->
-            <div class="favorite-icon-container">
-                <a href="/favoritos" id="favorite-link">
-                    <i class="fas fa-heart"></i>
-                    <span id="favorite-count">0</span>
-                </a>
-            </div>
+                <div class="cart-icon">
+                    <a href="/carrinho" id="cart-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </div>
 
-           <div class="user-container">
-                <div class="usuName" id="usuName"></div>
-                <a href="../../login">
-                    <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
-                </a>
-            </div>
+                <div class="favorite-icon-container">
+                    <a href="/favoritos" id="favorite-link">
+                        <i class="fas fa-heart"></i>
+                        <span id="favorite-count">0</span>
+                    </a>
+                </div>
 
+                <div class="user-container" id="user-container">
+                    <div class="user-info">
+                        <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
+                        <div class="user-text">
+                            <span class="welcome">Bem-vindo</span>
+                            <span class="name" id="usuName">Visitante</span>
+                        </div>
+                    </div>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <!-- O conteúdo será preenchido via JavaScript -->
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -188,11 +201,12 @@ button:disabled {
             </div>
         </section>
     </div>
-
+    <script src="../static/JavaScript/headers/user_dropdown.js"></script>
     <script src="../static/JavaScript/headers/loja_pesquisa.js" defer></script>
     <script src="../static/JavaScript/headers/usuario.js"> </script>
     <script src="../static/JavaScript/headers/contador_favoritos.js"></script>
     <script src="../static/JavaScript/headers/contador_carrinho.js"></script>
+    <script src="../static/JavaScript/headers/theme_switch.js"></script>
     <script src="../static/JavaScript/tela_produto/carinho.js"></script>
     <script src="../static/JavaScript/tela_produto/produto.js"></script>
     <script src="../static/JavaScript/tela_produto/comentario.js"></script>

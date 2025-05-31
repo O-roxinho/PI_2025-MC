@@ -1,62 +1,168 @@
-function showNotification(mensagem) {
-    // Cria e injeta o estilo se ainda não foi criado
-    if (!document.getElementById('notificacao-estilo')) {
-        const style = document.createElement('style');
-        style.id = 'notificacao-estilo';
-        style.textContent = `
-            @keyframes slideIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-
-            .cart-notification {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                padding: 15px 25px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                background-color: #fff;
-                border-radius: 8px;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                z-index: 9999;
-                animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
-                font-family: Arial, sans-serif;
-            }
-
-            .cart-notification i {
-                font-size: 1.5em;
-                color: green;
-            }
-        `;
-        document.head.appendChild(style);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <script src="https://kit.fontawesome.com/3f0e6eb963.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    // Cria o elemento da notificação
-    const notification = document.createElement('div');
-    notification.className = 'cart-notification';
-    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${mensagem}!`;
+    a {
+      color: black;
+      text-decoration: none;
+    }
 
-    // Adiciona ao corpo
-    document.body.appendChild(notification);
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: black;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-    // Reset da animação
-    notification.style.animation = 'none';
-    void notification.offsetWidth;
-    notification.style.animation = 'slideIn 0.5s, fadeOut 0.5s 2.5s';
+    body.dark {
+      background-color: #121212;
+      color: white;
+    }
 
-    // Remove depois de 3 segundos
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
-}
+    body.dark a {
+      color: white;
+    }
 
+    header {
+      background-color: #ec821a;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
 
-// Exemplo de uso
-showNotification('Produto adicionado com sucesso');
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 35px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+    }
+
+    .search {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 400px;
+      text-align: center;
+    }
+
+    .cart {
+      font-size: 30px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    #imgUsu {
+      margin-top: 9px;
+    }
+
+    .dark_theme button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s;
+    }
+
+    .dark_theme i {
+      transition: color 0.3s;
+    }
+
+    /* Lua preta no claro */
+    .light-icon {
+      color: black;
+    }
+
+    /* Sol branco no escuro */
+    .dark-icon {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="menu">
+      <div class="logo">
+        <img src="mdc2.png" width="150px" height="40px" alt="Logo">
+      </div>
+
+      <div class="user-container">
+        <div class="usuName" id="usuName"></div>
+        <a href="../../login">
+          <p id="usuTxt">Olá Usuário Seja bem-vindo!</p>
+        </a>
+      </div>
+
+      <div class="left"></div>
+
+      <div class="search-bar">
+        <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+        <div id="suggestions-box" class="suggestions-box"></div>
+      </div>
+
+      <div class="cart-icon">
+        <a href="/carrinho" id="cart-link">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
+
+      <div class="favorite-icon-container">
+        <a href="/favoritos" id="favorite-link">
+          <i class="fas fa-heart"></i>
+          <span id="favorite-count">0</span>
+        </a>
+      </div>
+
+      <div class="dark_theme">
+        <button id="theme-toggle">
+          <i class="fa-solid fa-moon light-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    const button = document.getElementById("theme-toggle");
+    const body = document.body;
+    let darkMode = false;
+
+    button.addEventListener("click", () => {
+      darkMode = !darkMode;
+      body.classList.toggle("dark", darkMode);
+
+      if (darkMode) {
+        button.innerHTML = '<i class="fa-solid fa-sun dark-icon"></i>';
+      } else {
+        button.innerHTML = '<i class="fa-solid fa-moon light-icon"></i>';
+      }
+    });
+  </script>
+</body>
+</html>

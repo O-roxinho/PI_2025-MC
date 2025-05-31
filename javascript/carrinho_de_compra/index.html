@@ -5,37 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mundo das Coisas - Seu Carrinho</title>
     <link rel="stylesheet" href="static/styles.css" />
+    <link rel="stylesheet" href="static/headers/loja_pesquisa.css">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+
     />
+    <link rel="stylesheet" href="static/headers/loja_header.css">
+    <link rel="stylesheet" href="static/headers/loja_pesquisa.js">
+    
     <script src="../node/config.js"></script>
   </head>
   <body>
     <header>
-      <div class="container">
-        <div class="logo">
-          <h1>Mundo das <span>Coisas</span></h1>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Meu Carrinho</a></li>
-            <li><a href="#">Histórico</a></li>
-            <li><a href="#">Contato</a></li>
-          </ul>
-        </nav>
-        <div class="header-actions">
-          <button id="theme-toggle" class="theme-toggle">
-            <i class="fas fa-moon"></i>
-          </button>
-          <div class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
+      <div class="menu">
+          <div class="left">
+              <a href="/" class="logo">
+                  <img src="../static/imagens_icons/WhatsApp Image 2025-05-30 at 19.58.59.png" alt="Mundo das Coisas">
+              </a>
           </div>
-        </div>
+          
+          <div class="search-bar">
+              <input type="text" class="search" id="search-input" placeholder="Pesquisar...">
+              <div id="suggestions-box" class="suggestions-box">
+              </div>
+          </div>
+
+          <div class="right-icons">
+              <div class="theme-switch" id="theme-switch">
+                  <i class="fas fa-moon"></i>
+              </div>
+
+              <div class="cart-icon">
+                  <a href="/carrinho" id="cart-link">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span id="cart-count">0</span>
+                  </a>
+              </div>
+
+              <div class="favorite-icon-container">
+                  <a href="/favoritos" id="favorite-link">
+                      <i class="fas fa-heart"></i>
+                      <span id="favorite-count">0</span>
+                  </a>
+              </div>
+
+              <div class="user-container" id="user-container">
+                  <div class="user-info">
+                      <img id="imgUsu" src="../static/imagens_icons/user.png" alt="Usuário">
+                      <div class="user-text">
+                          <span class="welcome">Bem-vindo</span>
+                          <span class="name" id="usuName">Visitante</span>
+                      </div>
+                  </div>
+                  <div class="user-dropdown" id="user-dropdown">
+                      <!-- O conteúdo será preenchido via JavaScript -->
+                  </div>
+              </div>
+          </div>
       </div>
-    </header>
+  </header>
 
     <main class="container">
       <section class="cart-container">
@@ -73,7 +102,11 @@
         </div>
       </div>
     </footer>
-
+    <script src="../static/JavaScript/headers/usuario.js"></script>
+    <script src="../static/JavaScript/headers/contador_carrinho.js"></script>
+    <script src="../static/JavaScript/headers/loja_pesquisa.js"></script>
+    <script src="../static/JavaScript/headers/user_dropdown.js"></script>
+    <script src="../static/JavaScript/headers/theme_switch.js"></script>
     <script src="static/script.js"></script>
   </body>
 </html>
