@@ -1,3 +1,21 @@
+:root {
+    --suggestions-bg: #fff;
+    --suggestions-shadow: rgba(0, 0, 0, 0.1);
+    --text-color: #333;
+    --border-color: #dadada;
+    --hover-bg: #f0f0f0;
+    --name-color: #3640638c;
+}
+
+[data-theme="dark"] {
+    --suggestions-bg: #2d2d2d;
+    --suggestions-shadow: rgba(0, 0, 0, 0.2);
+    --text-color: #ffffff;
+    --border-color: #404040;
+    --hover-bg: #3d3d3d;
+    --name-color: #cccccc;
+}
+
 .search-bar {
     position: relative;
     width: 100%;
@@ -5,20 +23,23 @@
 }
 
 #search-input {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 8px var(--suggestions-shadow);
     width: 100%;
+    background-color: var(--suggestions-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 }
 
 #suggestions-box {
     position: absolute;
-    background-color: #fff;
+    background-color: var(--suggestions-bg);
     border-radius: 5px;
     width: 100%;
     max-height: 300px;
     overflow-y: auto;
     z-index: 1000;
     margin-top: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--suggestions-shadow);
 }
 
 .suggestion-item {
@@ -26,12 +47,12 @@
     align-items: center;
     padding: 10px;
     text-decoration: none;
-    color: #333;
-    border-bottom: 1px solid #dadada;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .suggestion-item:hover {
-    background-color: #f0f0f0;
+    background-color: var(--hover-bg);
 }
 
 .suggestion-img {
@@ -51,10 +72,11 @@
 .suggestion-info p {
     margin: 0;
     font-size: 14px;
+    color: var(--text-color);
 }
 
 .suggestion-info strong {
-    color: #3640638c;
+    color: var(--name-color);
     font-size: 16px;
 }
 
@@ -62,7 +84,7 @@ a {
     display: flex;
     text-decoration: none;
     color: inherit;
-    width: 100%;
+    
 }
 
 /* Tablets */

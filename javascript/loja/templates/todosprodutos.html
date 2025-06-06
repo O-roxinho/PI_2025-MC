@@ -11,85 +11,109 @@
     
     
     <style>
+        :root {
+            --container-bg: #ffffff;
+            --container-shadow: rgba(0, 0, 0, 0.1);
+            --text-color: #333;
+            --text-secondary: #666;
+            --border-color: #ddd;
+            --card-bg: #ffffff;
+            --card-hover-bg: #f8f9fa;
+            --price-color: #28a745;
+            --shipping-color: #007bff;
+        }
+
+        [data-theme="dark"] {
+            --container-bg: #2d2d2d;
+            --container-shadow: rgba(0, 0, 0, 0.2);
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #404040;
+            --card-bg: #3d3d3d;
+            --card-hover-bg: #4d4d4d;
+            --price-color: #2fb344;
+            --shipping-color: #0d6efd;
+        }
+
         /* Estilos globais */
-h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin: 20px 0;
-    color: #333;
-}
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: var(--text-color);
+        }
 
-/* Container principal dos produtos */
-.produtos-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-}
+        /* Container principal dos produtos */
+        .produtos-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
 
-/* Card de produto */
-.produto-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    padding: 15px;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
+        /* Card de produto */
+        .produto-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--container-shadow);
+            width: 200px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-.produto-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
+        .produto-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px var(--container-shadow);
+            background-color: var(--card-hover-bg);
+        }
 
-/* Imagem do produto */
-.produto-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
+        /* Imagem do produto */
+        .produto-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
 
-/* Nome do produto */
-#prdName {
-    font-size: 1.2rem;
-    margin: 10px 0;
-    color: #444;
-    font-weight: bold;
-}
+        /* Nome do produto */
+        #prdName {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: var(--text-color);
+            font-weight: bold;
+        }
 
-/* Preço do produto */
-.price {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #28a745;
-    margin: 5px 0;
-}
+        /* Preço do produto */
+        .price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--price-color);
+            margin: 5px 0;
+        }
 
-/* Parcelamento */
-.installment {
-    font-size: 0.9rem;
-    color: #555;
-    margin: 5px 0;
-}
+        /* Parcelamento */
+        .installment {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 5px 0;
+        }
 
-/* Frete grátis */
-.free-shipping {
-    font-size: 0.85rem;
-    color: #007bff;
-    margin: 5px 0;
-}
+        /* Frete grátis */
+        .free-shipping {
+            font-size: 0.85rem;
+            color: var(--shipping-color);
+            margin: 5px 0;
+        }
 
-/* Mensagem de erro */
-.error-message {
-    text-align: center;
-    color: #d9534f;
-    font-size: 1.1rem;
-    margin-top: 20px;
-}
-
+        /* Mensagem de erro */
+        .error-message {
+            text-align: center;
+            color: #d9534f;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -198,7 +222,7 @@ h1 {
             produtos.forEach(produto => {
                 const card = `
                     <div class="produto-card">
-                        <a href="/produto/${produto.id}">
+                        <a href="/produto?id=${produto.id}">
                             <img src="${produto.imagem_url}" width="200" class="img-fluid" alt="${produto.nome}">
                         </a>
                         <h2 id="prdName">${produto.nome}</h2>

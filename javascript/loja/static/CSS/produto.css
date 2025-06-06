@@ -1,10 +1,38 @@
+:root {
+    --review-bg: #fff;
+    --review-border: #ddd;
+    --review-shadow: rgba(0, 0, 0, 0.1);
+    --text-color: #333;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --name-color: #e67e22;
+    --container-bg: #fff;
+    --form-bg: #fff;
+    --form-border: #ddd;
+    --reviews-section-bg: #f8f9fa;
+}
+
+[data-theme="dark"] {
+    --review-bg: #2d2d2d;
+    --review-border: #404040;
+    --review-shadow: rgba(0, 0, 0, 0.2);
+    --text-color: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #888888;
+    --name-color: #ff9f43;
+    --container-bg: #2d2d2d;
+    --form-bg: #3d3d3d;
+    --form-border: #404040;
+    --reviews-section-bg: #1a1a1a;
+}
+
 .review {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--review-bg);
+    border: 1px solid var(--review-border);
     border-radius: 8px;
     margin-bottom: 15px;
     padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--review-shadow);
 }
 
 .infosAvaliacao {
@@ -34,7 +62,7 @@
 }
 
 #nomeAv strong {
-    color: #e67e22;
+    color: var(--name-color);
     font-size: 15pt;
     white-space: nowrap;
     overflow: hidden;
@@ -53,7 +81,7 @@
 }
 
 #dataAv {
-    color: #333;
+    color: var(--text-color);
     font-size: 14pt;
     font-weight: 500;
     margin-left: auto;
@@ -62,6 +90,7 @@
 }
 
 #comentAv {
+    color: var(--text-secondary);
     font-size: 13pt;
     margin-top: 8px;
     word-wrap: break-word;
@@ -238,363 +267,362 @@
     }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
+.product-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--review-shadow);
+}
 
+.product-image {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+}
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        .product-container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+#product-name {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
 
-        .product-image {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 20px;
-        }
+#product-price {
+    font-size: 1.8rem;
+    color: #ff6600;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
 
-        .product-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+#product-rating {
+    font-size: 1.5rem;
+    color: #ffcc00;
+    margin-bottom: 15px;
+}
 
-        #product-name {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 15px;
-            font-family: 'Poppins', sans-serif;
-        }
+#product-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
 
-        #product-price {
-            font-size: 1.8rem;
-            color: #ff6600;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
+/* Estilos do botão WhatsApp */
+#whatsapp-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
 
-        #product-rating {
-            font-size: 1.5rem;
-            color: #ffcc00;
-            margin-bottom: 15px;
-        }
+#whatsapp-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
 
-        #product-description {
-            color: #666;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+#whatsapp-button:hover {
+    background-color: #218838;
+}
 
-        /* Estilos do botão WhatsApp */
-        #whatsapp-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 25px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 30px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 300px;
-        }
+/* Seção de avaliações */
+.reviews {
+    padding: 20px;
+    background-color: var(--reviews-section-bg);
+    border-radius: 8px;
+    margin-top: 20px;
+}
 
-        #whatsapp-button img {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-        }
+.reviews h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
 
-        #whatsapp-button:hover {
-            background-color: #218838;
-        }
+#reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-        /* Seção de avaliações */
-        .reviews {
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+.review {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
 
-        .reviews h2 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-        }
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-        #reviews-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.review-content {
+    margin-bottom: 10px;
+}
 
-        .review {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #999;
+}
 
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+.delete-review {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: #dc3545;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
 
-        .review-content {
-            margin-bottom: 10px;
-        }
+.delete-review:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #c82333;
+}
 
-        .review-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #999;
-        }
+.delete-review i {
+    font-size: 16px;
+}
 
-        .delete-review {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            color: #dc3545;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            position: relative;
-        }
+/* Estilo para ícone de lixeira */
+.trash-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"/></svg>');
+}
 
-        .delete-review:hover {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: #c82333;
-        }
+/* Estilo para tooltip do botão de excluir */
+.delete-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+    z-index: 1000;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        .delete-review i {
-            font-size: 16px;
-        }
+.delete-review:hover .delete-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
 
-        /* Estilo para ícone de lixeira */
-        .trash-icon {
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-            vertical-align: middle;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"/></svg>');
-        }
+/* Estilo para indicador de admin */
+.admin-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    margin-left: 5px;
+}
 
-        /* Estilo para tooltip do botão de excluir */
-        .delete-tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            white-space: nowrap;
-            z-index: 1000;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+.review strong {
+    color: #333;
+    font-weight: 600;
+}
 
-        .delete-review:hover .delete-tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
+.review .rating {
+    color: #ffcc00;
+    margin-left: 10px;
+}
 
-        /* Estilo para indicador de admin */
-        .admin-badge {
-            background-color: #dc3545;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            margin-left: 5px;
-        }
+.review p {
+    margin: 10px 0;
+    color: #666;
+}
 
-        .review strong {
-            color: #333;
-            font-weight: 600;
-        }
+.review small {
+    color: #999;
+    font-size: 0.85rem;
+}
 
-        .review .rating {
-            color: #ffcc00;
-            margin-left: 10px;
-        }
+/* Formulário de avaliação */
+#review-form {
+    background-color: var(--form-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px var(--review-shadow);
+}
 
-        .review p {
-            margin: 10px 0;
-            color: #666;
-        }
+#review-form h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
 
-        .review small {
-            color: #999;
-            font-size: 0.85rem;
-        }
+#star-rating {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
 
-        /* Formulário de avaliação */
-        #review-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+.star {
+    cursor: pointer;
+    padding: 0 2px;
+    transition: color 0.2s ease;
+}
 
-        #review-form h3 {
-            font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 15px;
-            font-family: 'Poppins', sans-serif;
-        }
+#review-text {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--form-border);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    resize: vertical;
+    background-color: var(--form-bg);
+    color: var(--text-color);
+}
 
-        #star-rating {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
+#submit-review {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
 
-        .star {
-            cursor: pointer;
-            padding: 0 2px;
-            transition: color 0.2s ease;
-        }
+#submit-review:hover {
+    background-color: #0056b3;
+}
 
-        #review-text {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-family: inherit;
-            resize: vertical;
-        }
+#auth-message {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px var(--review-shadow);
+}
 
-        #submit-review {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
+#auth-message p {
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+}
 
-        #submit-review:hover {
-            background-color: #0056b3;
-        }
+#auth-message a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-        #auth-message {
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+#auth-message a:hover {
+    text-decoration: underline;
+}
 
-        #auth-message p {
-            margin-bottom: 10px;
-            color: #666;
-        }
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .product-container {
+        width: 95%;
+        padding: 15px;
+    }
 
-        #auth-message a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 500;
-        }
+    #product-name {
+        font-size: 1.5rem;
+    }
 
-        #auth-message a:hover {
-            text-decoration: underline;
-        }
+    #product-price {
+        font-size: 1.3rem;
+    }
 
-        /* Media Queries para responsividade */
-        @media (max-width: 768px) {
-            .product-container {
-                width: 95%;
-                padding: 15px;
-            }
+    .reviews {
+        padding: 15px;
+    }
 
-            #product-name {
-                font-size: 1.5rem;
-            }
+    #review-form {
+        padding: 15px;
+    }
 
-            #product-price {
-                font-size: 1.3rem;
-            }
+    .star {
+        font-size: 1.2rem;
+    }
+}
 
-            .reviews {
-                padding: 15px;
-            }
+@media (max-width: 480px) {
+    .product-container {
+        width: 100%;
+        padding: 10px;
+        margin: 10px auto;
+    }
 
-            #review-form {
-                padding: 15px;
-            }
+    #product-name {
+        font-size: 1.2rem;
+    }
 
-            .star {
-                font-size: 1.2rem;
-            }
-        }
+    #product-price {
+        font-size: 1.1rem;
+    }
 
-        @media (max-width: 480px) {
-            .product-container {
-                width: 100%;
-                padding: 10px;
-                margin: 10px auto;
-            }
+    #whatsapp-button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
 
-            #product-name {
-                font-size: 1.2rem;
-            }
+    .review {
+        padding: 10px;
+    }
 
-            #product-price {
-                font-size: 1.1rem;
-            }
+    #review-form h3 {
+        font-size: 1rem;
+    }
 
-            #whatsapp-button {
-                font-size: 0.9rem;
-                padding: 10px 15px;
-            }
+    #star-rating {
+        font-size: 1.2rem;
+    }
+}
 
-            .review {
-                padding: 10px;
-            }
-
-            #review-form h3 {
-                font-size: 1rem;
-            }
-
-            #star-rating {
-                font-size: 1.2rem;
-            }
-        }
-   
-        /* Estilos para as estrelas de avaliação do produto */
+/* Estilos para as estrelas de avaliação do produto */
 .icone-classificacao {
     position: relative;
     display: inline-block;
@@ -637,63 +665,62 @@
     color: #FFD700; /* Cor das estrelas durante o hover */
 }
 
-   
+.infosAvaliacao {
+    display: flex; /* Usa flexbox para alinhar os itens em linha */
+    justify-content: space-between; /* Faz o botão ficar à direita */
+    align-items: flex-start; /* Ajusta o alinhamento vertical dos itens */
+    flex-wrap: wrap; /* Permite que os itens se ajustem em linha */
+}
 
-        .infosAvaliacao {
-            display: flex; /* Usa flexbox para alinhar os itens em linha */
-            justify-content: space-between; /* Faz o botão ficar à direita */
-            align-items: flex-start; /* Ajusta o alinhamento vertical dos itens */
-            flex-wrap: wrap; /* Permite que os itens se ajustem em linha */
-        }
-    
-        .comentario-container {
-            flex-grow: 1; /* Faz o comentário ocupar o espaço disponível */
-            display: flex;
-            flex-direction: column; /* Organiza o texto em coluna */
-        }
-    
-        .excluir-comentario {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 13pt;
-            color: #696969;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            align-self: center; /* Garante que o botão fique alinhado verticalmente */
-            top: 30px;
-            right: 25px;
-        }
-    
-        .excluir-comentario:hover {
-            color: #d35400;
-        }
-    
-        .tooltip {
-            visibility: hidden;
-            opacity: 0;
-            background-color: #333;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            white-space: nowrap;
-            position: absolute;
-            top: -40px; /* Acima do botão */
-            left: 50%;
-            transform: translateX(-50%);
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 10;
-            font-size: 10pt;
-        }
-    
-        .excluir-comentario:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-        /*#dataAv{
-            position: relative;
-            left: 40px;
-        }*/
+.comentario-container {
+    flex-grow: 1; /* Faz o comentário ocupar o espaço disponível */
+    display: flex;
+    flex-direction: column; /* Organiza o texto em coluna */
+}
+
+.excluir-comentario {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 13pt;
+    color: #696969;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    align-self: center; /* Garante que o botão fique alinhado verticalmente */
+    top: 30px;
+    right: 25px;
+}
+
+.excluir-comentario:hover {
+    color: #d35400;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    position: absolute;
+    top: -40px; /* Acima do botão */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+    font-size: 10pt;
+}
+
+.excluir-comentario:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*#dataAv{
+    position: relative;
+    left: 40px;
+}*/
     

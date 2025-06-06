@@ -1,11 +1,20 @@
+:root {
+    --carousel-btn-bg: #ec821a;
+    --carousel-btn-color: white;
+}
+
+[data-theme="dark"] {
+    --carousel-btn-bg: #d35400;
+    --carousel-btn-color: white;
+}
 
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 
-    background-color: #ec821a;
-    color: white;
+    background-color: var(--carousel-btn-bg);
+    color: var(--carousel-btn-color);
     border: none;
     border-radius: 50%;
     width: 60px;

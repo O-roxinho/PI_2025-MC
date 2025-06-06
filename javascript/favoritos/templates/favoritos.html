@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Favoritos</title>
     <link rel="stylesheet" href="../static/CSS/loja_header.css">
-    <link rel="stylesheet" href="../static/headers/loja_pesquisa.css">k
+    <link rel="stylesheet" href="../static/CSS/loja_pesquisa.css">
     <link rel="stylesheet" href="../static/CSS/favoritos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="../../node/config.js"></script>
@@ -65,11 +65,16 @@
         <div id="favoritos-container" class="favoritos-grid">
             <!-- Os favoritos serão carregados aqui via JavaScript -->
         </div>
+        <div class="empty-favorites" id="empty-favorites" style="display: none;">
+            <i class="fas fa-heart-broken"></i>
+            <p>Você ainda não tem itens favoritos</p>
+            <a href="/" class="continue-shopping">Continuar Comprando</a>
+        </div>
     </main>
 
     <script src="../static/JavaScript/headers/usuario.js"></script>
     <script src="../static/JavaScript/headers/contador_carrinho.js"></script>
-    <script src="../static/headers/contador_favoritos.js"></script>
+    <script src="../static/JavaScript/headers/contador_favoritos.js"></script>
     <script src="../static/JavaScript/headers/loja_pesquisa.js"></script>
     <script src="../static/JavaScript/headers/user_dropdown.js"></script>
     <script src="../static/JavaScript/headers/theme_switch.js"></script>
