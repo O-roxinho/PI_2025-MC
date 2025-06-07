@@ -5,8 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
 from .models import Carrinho, ItemCarrinho
-from administrador.models import Produtos
+from administrador.models import Produtos, Telefone
 from .serializers import CarrinhoSerializer, ProdutoSerializer
+from urllib.parse import quote
 
 class CarrinhoView(APIView):
     permission_classes = [IsAuthenticated]
@@ -77,3 +78,31 @@ class ProdutoDetalhesAPI(APIView):
         produto = get_object_or_404(Produtos, id=produto_id)
         serializer = ProdutoSerializer(produto, context={'request': request})
         return Response(serializer.data)
+
+class WhatsAppCarrinhoAPI(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, request):
+        limpar_carrinho = request.data.get('limpar_carrinho', False)
+        carrinho = get_object_or_404(Carrinho, usuario=request.user)
+        numerobr = Telefone.objects.first()
+        numero = getattr(numerobr, 'codigo_pais', '55') + getattr(numerobr, 'telefone', '')
+        print(numero)
+        # Construir mensagem com todos os produtos
+        mensagem = "Olá! Estou interessado nos seguintes produtos:\n\n"
+        total = 0
+        
+        for item in carrinho.itens.all():
+            mensagem += f"- {item.produto.nome}: R${item.produto.preco:.2f} x {item.quantidade}\n"
+            total += item.produto.preco * item.quantidade
+        
+        mensagem += f"\nTotal: R${total:.2f}"
+
+        # Se o usuário quiser limpar o carrinho
+        if limpar_carrinho:
+            carrinho.itens.all().delete()
+
+        return Response({
+            'url': f'https://web.whatsapp.com/send?phone={numero}&text={quote(mensagem)}'
+        })

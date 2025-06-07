@@ -220,15 +220,115 @@ window.addToCart = async function (productId) {
 
     // Tema dark/light (opcional)
     const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        const icon = themeToggle.querySelector('i');
-        if (document.body.classList.contains('dark-theme')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    });
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    }
+
+    // Código do botão WhatsApp
+    const checkoutBtn = document.getElementById('checkout-btn');
+    
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', async function() {
+            // Criar modal de confirmação
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Deseja limpar o carrinho após enviar?</h3>
+                    <div class="modal-buttons">
+                        <button class="btn-sim">Limpar</button>
+                        <button class="btn-nao">Não</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Estilizar o modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
+                .modal-content {
+                    background: rgba(83, 83, 83, 0.5);
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+                .modal-buttons {
+                    margin-top: 20px;
+                }
+                .modal-buttons button {
+                    margin: 0 10px;
+                    padding: 8px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                .btn-sim {
+                    background: #25D366;
+                    color: white;
+                }
+                .btn-nao {
+                    background: #666;
+                    color: white;
+                }
+            `;
+
+            //  #ec821a black white ndad
+            document.head.appendChild(style);
+
+            // Função para enviar para o WhatsApp
+            const enviarParaWhatsApp = async (limparCarrinho) => {
+                try {
+                    const response = await fetch(`${API_CONFIG.BASE_URL}/carrinho/api/carrinho/whatsapp/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Token ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify({ limpar_carrinho: limparCarrinho })
+                    });
+
+                    const data = await response.json();
+                    window.open(data.url, '_blank');
+                } catch (error) {
+                    console.error('Erro ao enviar para o WhatsApp:', error);
+                    alert('Erro ao enviar para o WhatsApp. Tente novamente.');
+                }
+            };
+
+            // Adicionar eventos aos botões
+            modal.querySelector('.btn-sim').addEventListener('click', () => {
+                modal.remove();
+                enviarParaWhatsApp(true);
+            });
+
+            modal.querySelector('.btn-nao').addEventListener('click', () => {
+                modal.remove();
+                enviarParaWhatsApp(false);
+            });
+        });
+    }
+
+
 
