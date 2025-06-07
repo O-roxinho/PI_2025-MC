@@ -40,6 +40,11 @@ const API_CONFIG = {
             BASE: '/administrador/login/',
             REGISTER: '/administrador/api/register/',
             LOGOUT: '/administrador/api/logout/'
+        },
+
+        FAVORITOS:{
+            LISTAR: '/api/favoritos/',
+            REMOVER: '/api/favoritos/'
         }
     }
 };

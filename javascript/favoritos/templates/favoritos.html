@@ -9,6 +9,34 @@
     <link rel="stylesheet" href="../static/CSS/favoritos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="../../node/config.js"></script>
+    <style>
+        /* Estilos para a notificação */
+.cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+
+        @keyframes slideIn {
+            from {right: -100px; opacity: 0;}
+            to {right: 20px; opacity: 1;}
+        }
+
+        @keyframes fadeOut {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+
+       
+
+    </style>
 </head>
 <body>
     <header>
@@ -70,6 +98,10 @@
             <p>Você ainda não tem itens favoritos</p>
             <a href="/" class="continue-shopping">Continuar Comprando</a>
         </div>
+
+        <div id="cart-notification" class="cart-notification" style="display: none;">
+                <i class="fas fa-check-circle"></i> Produto adicionado ao carrinho!
+            </div>
     </main>
 
     <script src="../static/JavaScript/headers/usuario.js"></script>
