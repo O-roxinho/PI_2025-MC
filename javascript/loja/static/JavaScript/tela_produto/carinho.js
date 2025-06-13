@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Restaura o botão após a operação
             addToCartBtn.disabled = false;
-            addToCartBtn.innerHTML = '<img src="/static/imagens_icons/cart-add.png" alt="Adicionar ao Carrinho"> ADICIONAR AO CARRINHO';
+            addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> ADICIONAR AO CARRINHO';
         });
     }
 

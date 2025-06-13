@@ -14,42 +14,85 @@
     
     
     <style>
-        /* Estilos para o botão do carrinho */
-.cart-button {
-    padding: 15px 30px;
-    background-color: #ff9900;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
+        /* Estilos para os botões de ação do produto */
+        .product-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
 
-.cart-button img {
-    margin-right: 10px;
-    height: 20px;
-    width: 20px;
-}
+        .cart-button {
+            padding: 12px 25px;
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-.cart-button:hover {
-    background-color: #e68a00;
-}
+        .cart-button i {
+            font-size: 20px;
+        }
 
-/* Estilos para a notificação */
-.cart-notification {
+        .cart-button:hover {
+            background-color: #e68a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .favorite-button {
+            background: none;
+            border: 2px solid #ff9900;
+            border-radius: 8px;
+            font-size: 20px;
+            color: #ff9900;
+            cursor: pointer;
+            padding: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+        }
+
+        .favorite-button:hover {
+            background-color: #fff5e6;
+            transform: scale(1.05);
+        }
+
+        .favorite-button.active {
+            background-color: #ff9900;
+            color: white;
+        }
+
+        .favorite-button i {
+            transition: all 0.3s ease;
+        }
+
+        /* Estilos para a notificação */
+        .cart-notification {
             position: fixed;
             bottom: 20px;
             right: 20px;
             background-color: #4CAF50;
             color: white;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 15px 25px;
+            border-radius: 8px;
             z-index: 1000;
             display: none;
             animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         @keyframes slideIn {
@@ -61,50 +104,17 @@
             from {opacity: 1;}
             to {opacity: 0;}
         }
-/* Estilos para o botão durante o carregamento */
-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
 
-.fa-spinner {
-    margin-right: 8px;
-}
+        /* Estilos para o botão durante o carregamento */
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
-/* Melhorias na notificação */
-.cart-notification {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.cart-notification i {
-    font-size: 1.5em;
-}
-
-.favorite-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #666;
-    cursor: pointer;
-    padding: 10px;
-    transition: all 0.3s ease;
-}
-
-.favorite-button:hover {
-    transform: scale(1.1);
-}
-
-.favorite-button.active {
-    color: #ff4444;
-}
-
-.favorite-button i {
-    transition: all 0.3s ease;
-}
+        .fa-spinner {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -170,16 +180,16 @@ button:disabled {
         </button>
         <div class="product-actions">
             <button id="add-to-cart" class="cart-button">
-                <img src="/static/imagens_icons/cart-add.png" alt="Adicionar ao Carrinho">
+                <i class="fas fa-shopping-cart"></i>
                 ADICIONAR AO CARRINHO
             </button>
-            <button id="favorite-button" class="favorite-button">
+            <button id="favorite-button" class="favorite-button" title="Adicionar aos favoritos">
                 <i class="far fa-heart"></i>
             </button>
             <div id="cart-notification" class="cart-notification" style="display: none;">
-                <i class="fas fa-check-circle"></i> Produto adicionado ao carrinho!
+                <i class="fas fa-check-circle"></i>
+                <span>Produto adicionado ao carrinho!</span>
             </div>
-            
         </div>
 
         <section class="reviews">
