@@ -1,9 +1,9 @@
-pip install --upgrade pip
+
 Django 
 Pillow 
 djangorestframework 
 djangorestframework-simplejwt 
 django-cors-headers 
 mysqlclient
-pywin32 
+pywin32; platform_system == "Windows"
 whitenoise 
