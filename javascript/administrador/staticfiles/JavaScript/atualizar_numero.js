@@ -1,6 +1,6 @@
 // URL da API para atualizar o telefone 
 const apiAtualizarTelefoneUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.TELEFONES}1/`; // Use o endpoint correto
-
+const tokens = localStorage.getItem('token');
 
 // Função para exibir mensagens
 function exibirMensagem(mensagem, tipo) {
@@ -38,7 +38,7 @@ document.getElementById('numeros-form').addEventListener('submit', async (event)
       method: 'PUT', // Use PUT para atualização
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`, // Envia o token no cabeçalho
+        'Authorization': `Token ${tokens}`, // Envia o token no cabeçalho
       },
       body: JSON.stringify({ codigo_pais: codigoPais, telefone: telefone }), // Converte os dados para JSON
     });

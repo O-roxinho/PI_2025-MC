@@ -1,7 +1,8 @@
 // Configurações da API
 const API_CONFIG = {
     // URLs base
-    BASE_URL: 'http://127.0.0.1:8000',
+    BASE_URL: 'https://mundodascoisas.pythonanywhere.com',
+    //BASE_URL: 'http://127.0.0.1:8000',
     
     // Portas
     PORT: 8000,

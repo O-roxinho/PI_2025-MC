@@ -1,14 +1,15 @@
 let apiUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADMIN.PRODUTOS}`;
 
+
 document.getElementById('enviar_cadastro_produto').addEventListener('submit', async (event) => {
   event.preventDefault(); // Impede o envio padrão do formulário
-
+  const categoriaId = document.getElementById('categoria').value;
   // Cria um objeto FormData para enviar arquivos
   const formData = new FormData();
   formData.append('nome', document.getElementById('nome').value);
   formData.append('descricao', document.getElementById('descricao').value);
   formData.append('preco', parseFloat(document.getElementById('preco').value));
-  formData.append('categoria', 9); // Temporariamente fixo (substitua pelo valor correto)
+  formData.append('categoria', categoriaId); // Temporariamente fixo (substitua pelo valor correto)
   formData.append('estoque', parseInt(document.getElementById('estoque').value));
 
   // Adiciona a imagem ao FormData, se existir
@@ -16,7 +17,8 @@ document.getElementById('enviar_cadastro_produto').addEventListener('submit', as
   if (imagemInput.files.length > 0) {
     formData.append('imagem', imagemInput.files[0]);
   }
-
+  
+  console.log(formData)
   try {
     // Envia a requisição POST para a API
     const response = await fetch(apiUrl, {

@@ -3,5 +3,6 @@ Pillow
 djangorestframework 
 djangorestframework-simplejwt 
 django-cors-headers 
+mysqlclient
 pywin32 
 whitenoise 

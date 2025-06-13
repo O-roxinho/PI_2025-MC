@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // 2. Capturar todos os dados da resposta
         const data = await categoriasResponse.json();
-        const categorias = data.categorias;
+        const categorias = shuffleArray(data.categorias);
 
         // 3. Limpar container antes de adicionar conteúdo
         mainContainer.innerHTML = '';
