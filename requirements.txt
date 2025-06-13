@@ -1,3 +1,4 @@
+pip install --upgrade pip
 Django 
 Pillow 
 djangorestframework 
