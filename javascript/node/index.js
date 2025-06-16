@@ -53,7 +53,7 @@ app.get('/administrador/atualizar', (req, res) => {
 });
 
 // Rota para carregar a página de produto
-app.get('/produto/', (req, res) => {
+app.get('/produto', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'loja', 'templates', 'produto.html'));
 });
 
