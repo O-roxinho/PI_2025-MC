@@ -77,7 +77,7 @@ app.get('/favoritos/', (req, res) => {
 // Servir arquivos estáticos do carrinho
 app.use('/static', express.static(path.join(__dirname, '..', 'favoritos', 'static')));
 
-// Iniciar o servidor
-app.listen(API_CONFIG.NODE_PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${API_CONFIG.NODE_PORT}`);
+const PORT = process.env.PORT || API_CONFIG.NODE_PORT;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
